@@ -2,12 +2,14 @@
 # JCY oct 23
 # PRO DB PY
 
+import mysql.connector
 import tkinter as tk
 import random
 from math import sqrt
 import time
 import database
 import datetime
+from database import *
 
 
 # Main window
@@ -89,10 +91,18 @@ def next_point(event):
 
 def save_game(event):
     # TODO
+    open_dbconnection()
+    global entry_pseudo, duration
+    username = entry_pseudo.get()
+    duration = duration
+    title = 1
+    add_results(username, duration ,nbsuccess, nbtrials, title)
     print("dans save")
+    close_dbconnection()
 
 
 def display_timer():
+    global duration
     duration=datetime.datetime.now()-start_date #elapsed time since beginning, in time with decimals
     duration_s=int(duration.total_seconds()) #idem but in seconds (integer)
     #display min:sec (00:13)
@@ -102,7 +112,7 @@ def display_timer():
 
 def open_window_geo_01(window):
     # window = tk.Tk()
-    global window_geo01, hex_color, lbl_title, lbl_duration, lbl_result, lbl_target, canvas, start_date
+    global window_geo01, hex_color, lbl_title, lbl_duration, lbl_result, lbl_target, canvas, start_date, entry_pseudo
     window_geo01 = tk.Toplevel(window)
 
     window_geo01.title("Exercice de géométrie")
