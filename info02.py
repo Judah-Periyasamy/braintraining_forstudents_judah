@@ -9,6 +9,7 @@ import time
 import database
 import datetime
 from tkinter.messagebox import *
+from database import *
 
 #important data (to save)
 pseudo="Gaston" #provisory pseudo for user
@@ -47,8 +48,14 @@ def next(event):
 
 
 def save_game(event):
-    print("dans save")
     # TODO
+    open_dbconnection()
+    global entry_pseudo, duration
+    username = entry_pseudo.get()
+    title = 2
+    add_results(username, duration ,nbsuccess, nbtrials, title)
+    print("dans save")
+    close_dbconnection()
 
 
 def test(event):
@@ -69,6 +76,7 @@ def test(event):
 
 
 def display_timer():
+    global duration
     duration = datetime.datetime.now() - start_date  # elapsed time since beginning, in time with decimals
     duration_s = int(duration.total_seconds())  # idem but in seconds (integer)
     # display min:sec (00:13)
@@ -77,7 +85,7 @@ def display_timer():
 
 
 def open_window_info_02(window):
-    global window_info02, lbl_duration, lbl_result, entry_n2, label_u2, label_n1, hex_color, start_date
+    global window_info02, lbl_duration, lbl_result, entry_n2, label_u2, label_n1, hex_color, start_date, entry_pseudo
     window_info02 = tk.Toplevel(window)
 
     #window_info02 = tk.Tk()

@@ -94,7 +94,6 @@ def save_game(event):
     open_dbconnection()
     global entry_pseudo, duration
     username = entry_pseudo.get()
-    duration = duration
     title = 1
     add_results(username, duration ,nbsuccess, nbtrials, title)
     print("dans save")
