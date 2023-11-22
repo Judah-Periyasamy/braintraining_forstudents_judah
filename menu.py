@@ -47,12 +47,22 @@ def display_result(event):
 
     # Frames
     filter_frame = Frame(window,bg="white", padx=10)
+    results_frame = Frame(window, bg="white", padx=10)
 
     #Filters Label
     lbl_user = Label(filter_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
     lbl_ex = Label(filter_frame, text="Exercice :", bg="white", padx=40, font=("Arial,11"))
     lbl_startdate = Label(filter_frame, text="Date début :", bg="white", padx=40, font=("Arial,11"))
     lbl_enddate = Label(filter_frame, text="Date fin :", bg="white", padx=40, font=("Arial,11"))
+
+    #Results labels
+    lbl_col_student = Label(results_frame, text="Élève", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_date_hour = Label(results_frame, text="Date heure", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_time = Label(results_frame, text="Temps", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_ex = Label(results_frame, text="Exercice", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_nbok = Label(results_frame, text="nb OK", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
 
     #Filters Entry
     entry_user = Entry(filter_frame)
@@ -80,6 +90,23 @@ def display_result(event):
     entry_enddate.grid(row=0, column=7)
 
     button_result.grid(row=1, column=0, pady=5)
+
+    #RESULTS
+    results_frame.grid(row=2, pady=10 ,columnspan=3)
+
+    lbl_col_student.grid(row=0, column=0, padx=(0, 10))
+
+    lbl_col_date_hour.grid(row=0, column=1, padx=(0, 10))
+
+    lbl_col_time.grid(row=0, column=2, padx=(0, 10))
+
+    lbl_col_ex.grid(row=0, column=3, padx=(0, 10))
+
+    lbl_col_nbok.grid(row=0, column=4, padx=(0, 10))
+
+    lbl_col_nbtot.grid(row=0, column=5, padx=(0, 10))
+
+    lbl_col_reussi.grid(row=0, column=6, padx=(0, 10))
 
     # main loop
     window.mainloop()
