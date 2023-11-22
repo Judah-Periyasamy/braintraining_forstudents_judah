@@ -48,6 +48,8 @@ def display_result(event):
     # Frames
     filter_frame = Frame(window,bg="white", padx=10)
     results_frame = Frame(window, bg="white", padx=10)
+    title_total_frame = Frame(window, bg="white", padx=10)
+    total_frame = Frame(window, bg="white", padx=10)
 
     #Filters Label
     lbl_user = Label(filter_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
@@ -64,6 +66,15 @@ def display_result(event):
     lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
     lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
 
+    #Totals labels
+    title_total = Label(title_total_frame,text="Total", bg="white", font=("Arial, 11"), width=10)
+
+    lbl_tot = Label(total_frame, text="NbLignes", bg="white", padx=40, font=("Arial, 11"))
+    lbl_time = Label(total_frame, text="Temps total", bg="white", padx=40, font=("Arial, 11"))
+    lbl_nbok = Label(total_frame, text="Nb OK", bg="white", padx=40, font=("Arial, 11"))
+    lbl_nbtotal = Label(total_frame, text="Nb Total", bg="white", padx=40, font=("Arial, 11"))
+    lbl_purcenttot = Label(total_frame, text="% Total", bg="white", padx=40, font=("Arial, 11"))
+
     #Filters Entry
     entry_user = Entry(filter_frame)
     entry_ex = Entry(filter_frame)
@@ -72,6 +83,7 @@ def display_result(event):
 
     #Buttons
     button_result = Button(filter_frame, text="Voir résultats", font=("Arial,11"))
+
 
     # Place the elements
     #FILTER
@@ -107,6 +119,18 @@ def display_result(event):
     lbl_col_nbtot.grid(row=0, column=5, padx=(0, 10))
 
     lbl_col_reussi.grid(row=0, column=6, padx=(0, 10))
+
+    #TOTAL
+    title_total_frame.grid(row=3, pady=10 ,columnspan=3)
+    title_total.grid(row=3, pady=10 ,columnspan=3)
+
+    total_frame.grid(row=4, pady=10 ,columnspan=3)
+
+    lbl_tot.grid(row=0, column=0, padx=(0, 10))
+    lbl_time.grid(row=0, column=1, padx=(0, 10))
+    lbl_nbok.grid(row=0, column=2, padx=(0, 10))
+    lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
+    lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
     # main loop
     window.mainloop()
