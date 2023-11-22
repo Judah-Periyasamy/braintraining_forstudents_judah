@@ -9,6 +9,8 @@ import geo01
 import info02
 import info05
 from database import *
+from tkinter import *
+import tkinter.font
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
@@ -25,7 +27,62 @@ def exercise(event,exer):
 
 #call display_results
 def display_result(event):
-    # TODO
+    # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
+    # window's start
+    window = Tk()
+
+    # window's parameters
+    window.title("Affichage braintraining")
+    window.geometry("1100x900")
+
+    # color définition
+    rgb_color = (139, 201, 194)
+    hex_color = '#%02x%02x%02x' % rgb_color  # translation in hexa
+    window.configure(bg=hex_color)
+    window.grid_columnconfigure((0, 1, 2), minsize=300, weight=1)
+
+    # Title of the results display
+    lbl_title_results = tk.Label(window, text="TRAINING:AFFICHAGE", font=("Arial", 15))
+    lbl_title_results.grid(row=0, column=1, ipady=5, padx=40, pady=40)
+
+    # Frames
+    filter_frame = Frame(window,bg="white", padx=10)
+
+    #Filters Label
+    lbl_user = Label(filter_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
+    lbl_ex = Label(filter_frame, text="Exercice :", bg="white", padx=40, font=("Arial,11"))
+    lbl_startdate = Label(filter_frame, text="Date début :", bg="white", padx=40, font=("Arial,11"))
+    lbl_enddate = Label(filter_frame, text="Date fin :", bg="white", padx=40, font=("Arial,11"))
+
+    #Filters Entry
+    entry_user = Entry(filter_frame)
+    entry_ex = Entry(filter_frame)
+    entry_startdate = Entry(filter_frame)
+    entry_enddate = Entry(filter_frame)
+
+    #Buttons
+    button_result = Button(filter_frame, text="Voir résultats", font=("Arial,11"))
+
+    # Place the elements
+    #FILTER
+    filter_frame.grid(row=1, columnspan=3)
+
+    lbl_user.grid(row=0, column=0, padx=(0, 10))
+    entry_user.grid(row=0, column=1)
+
+    lbl_ex.grid(row=0, column=2, padx=(0, 10))
+    entry_ex.grid(row=0, column=3)
+
+    lbl_startdate.grid(row=0, column=4, padx=(0, 10))
+    entry_startdate.grid(row=0, column=5)
+
+    lbl_enddate.grid(row=0, column=6, padx=(0, 10))
+    entry_enddate.grid(row=0, column=7)
+
+    button_result.grid(row=1, column=0, pady=5)
+
+    # main loop
+    window.mainloop()
     print("display_result")
 
 
