@@ -152,24 +152,6 @@ def display_result(event):
 
     close_dbconnection()
 
-
-    open_dbconnection()
-    results_infos = infos_results()
-    num_rows = len(results_infos)
-    num_columns = len(results_infos[0])
-    blank_results = [[None for _ in range(num_rows)] for _ in range(num_columns)]
-    for line in range(len(results_infos[0])):
-        for col in range(6):
-
-            blank_results[line] = tkinter.Label(results_frame, text=str(results_infos[col][line][0]), pady=3, width=14, bg="white", height=1, font=("Arial", 11))
-
-
-            blank_results[line].grid(row=line + 1, column=col)
-
-
-            blank_results[line].grid(row=line + 1, column=col)
-    close_dbconnection()
-
     # main loop
     window.mainloop()
     print("display_result")
