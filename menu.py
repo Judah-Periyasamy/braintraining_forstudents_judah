@@ -24,9 +24,11 @@ dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_in
 def exercise(event,exer):
     dict_games[exer](window)
 
-
 #call display_results
 def display_result(event):
+    global results_frame
+
+
     # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
     # window's start
     window = Tk()
@@ -66,6 +68,7 @@ def display_result(event):
     lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
     lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
 
+
     #Totals labels
     title_total = Label(title_total_frame,text="Total", bg="white", font=("Arial, 11"), width=10)
 
@@ -74,6 +77,7 @@ def display_result(event):
     lbl_nbok = Label(total_frame, text="Nb OK", bg="white", padx=40, font=("Arial, 11"))
     lbl_nbtotal = Label(total_frame, text="Nb Total", bg="white", padx=40, font=("Arial, 11"))
     lbl_purcenttot = Label(total_frame, text="% Total", bg="white", padx=40, font=("Arial, 11"))
+
 
     #Filters Entry
     entry_user = Entry(filter_frame)
@@ -145,6 +149,24 @@ def display_result(event):
             e.grid(row=j + 1, column=i + 6)
         i = i + 1
 
+    close_dbconnection()
+
+
+    open_dbconnection()
+    results_infos = infos_results()
+    num_rows = len(results_infos)
+    num_columns = len(results_infos[0])
+    blank_results = [[None for _ in range(num_rows)] for _ in range(num_columns)]
+    for line in range(len(results_infos[0])):
+        for col in range(6):
+
+            blank_results[line] = tkinter.Label(results_frame, text=str(results_infos[col][line][0]), pady=3, width=14, bg="white", height=1, font=("Arial", 11))
+
+
+            blank_results[line].grid(row=line + 1, column=col)
+
+
+            blank_results[line].grid(row=line + 1, column=col)
     close_dbconnection()
 
     # main loop
