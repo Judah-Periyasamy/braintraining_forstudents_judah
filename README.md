@@ -15,5 +15,5 @@ Il conviendra cependant d'installer le package mysql-connector-python pour l'int
 
 ### A qui puis-je m'adresser? ###
 
-Propriétaire du dépôt : frederique.andolfatto@eudvaud.ch\
+Propriétaire du dépôt : frederique.andolfatto@eudvaud.ch\ et judah.periyasamy@eduvaud.ch
 Enseignant ayant créé le projet de base : jeanphilippe.chavey@eduvaud.ch
