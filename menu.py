@@ -11,7 +11,6 @@ import info05
 from database import *
 from tkinter import *
 import tkinter.font
-from tkinter import ttk
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
