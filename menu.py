@@ -137,9 +137,10 @@ def display_result(event):
     i=0
     for student in name:
         for j in range(len(student)):
-            e = Label(results_frame,width=10, text=student[j])
-            e.grid(row=j + 1, column=i)
-            #e.insert(END, student[j])
+            for data in range(len(student[j])):
+                e = Label(results_frame,width=10, text=student[j][data])
+                e.grid(row=j + 1, column=i + data)
+                #e.insert(END, student[j])
         i = i + 1
 
     close_dbconnection()
