@@ -11,6 +11,7 @@ import info05
 from database import *
 from tkinter import *
 import tkinter.font
+from tkinter import ttk
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
@@ -136,6 +137,18 @@ def display_result(event):
     lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
     lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
+    lbl_col_progress = Label(results_frame, text="Progression", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_progress.grid(row=0, column=7, padx=(0, 10))
+
+    #Function for the colors for progress bar
+    def get_color(percentage):
+        if percentage >= 70:
+            return "#00FF00"  # Green
+        elif 40 <= percentage < 70:
+            return "#FFA500"  # Orange
+        else:
+            return "#FF0000"  # Red
+
     #Insert the values taken from MySQL into Tkinter
     open_dbconnection()
     name = infos_results()
@@ -148,12 +161,20 @@ def display_result(event):
                 else:
                     e = Label(results_frame, width=10, text=get_exercice_name(student[j][data]))
                 e.grid(row=j + 1, column=i + data)
-                #e.insert(END, student[j])
             try:
-                e = Label(results_frame, width=10, text=f"{round(float(student[j][4]) * 100 / float(student[j][5]), 2)}%")
+                success_percentage = round(float(student[j][4]) * 100 / float(student[j][5]), 2)
+                e = Label(results_frame, width=10, text=f"{success_percentage}%")
             except:
                 e = Label(results_frame, width=10, text="0%")
             e.grid(row=j + 1, column=i + 6)
+
+            #Creation of the bar progression
+            progress_rect = Canvas(results_frame, width=100, height=20, bg="white", bd=0, highlightthickness=0)
+            progress_rect.create_rectangle(0, 0, success_percentage, 20, fill=get_color(success_percentage), outline="")
+            progress_rect.grid(row=j + 1, column=7, pady=5)
+
+            #https://www.pythontutorial.net/tkinter/ttk-style/
+            #https: // anzeljg.github.io / rin2 / book2 / 2405 / docs / tkinter / create_rectangle.html
         i = i + 1
 
     close_dbconnection()
