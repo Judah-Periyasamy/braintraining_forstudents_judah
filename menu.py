@@ -141,6 +141,8 @@ def display_result(event):
                 e = Label(results_frame,width=10, text=student[j][data])
                 e.grid(row=j + 1, column=i + data)
                 #e.insert(END, student[j])
+            e = Label(results_frame, width=10, text=f"{round(float(student[j][4]) * 100 / float(student[j][5]), 2)}%")
+            e.grid(row=j + 1, column=i + 6)
         i = i + 1
 
     close_dbconnection()

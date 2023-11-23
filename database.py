@@ -33,7 +33,7 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
 def infos_results():
     infos = []
     cursor = db_connection.cursor()
-    query = "Select username, start_date_hour, duration, nb_ok, nb_total, exercice_id from results"
+    query = "Select username, start_date_hour, duration, exercice_id, nb_ok, nb_total from results"
     cursor.execute(query)
     name = cursor.fetchall()
     infos.append(name)
