@@ -136,6 +136,7 @@ def display_result(event):
     lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
     lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
+    #Insert the values taken from MySQL into Tkinter
     open_dbconnection()
     name = infos_results()
     i=0
