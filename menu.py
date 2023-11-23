@@ -143,10 +143,16 @@ def display_result(event):
     for student in name:
         for j in range(len(student)):
             for data in range(len(student[j])):
-                e = Label(results_frame,width=10, text=student[j][data])
+                if data != 3:
+                    e = Label(results_frame,width=10, text=student[j][data])
+                else:
+                    e = Label(results_frame, width=10, text=get_exercice_name(student[j][data]))
                 e.grid(row=j + 1, column=i + data)
                 #e.insert(END, student[j])
-            e = Label(results_frame, width=10, text=f"{round(float(student[j][4]) * 100 / float(student[j][5]), 2)}%")
+            try:
+                e = Label(results_frame, width=10, text=f"{round(float(student[j][4]) * 100 / float(student[j][5]), 2)}%")
+            except:
+                e = Label(results_frame, width=10, text="0%")
             e.grid(row=j + 1, column=i + 6)
         i = i + 1
 

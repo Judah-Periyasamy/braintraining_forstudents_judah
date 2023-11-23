@@ -30,6 +30,13 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
     else:
         return False
 
+def get_exercice_name(id):
+    cursor = db_connection.cursor()
+    query = "Select name from exercices where id=%s"
+    cursor.execute(query, (id, ))
+    result = cursor.fetchone()
+    return result
+
 def infos_results():
     infos = []
     cursor = db_connection.cursor()
