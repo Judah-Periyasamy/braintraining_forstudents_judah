@@ -132,6 +132,18 @@ def display_result(event):
     lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
     lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
+    open_dbconnection()
+    name = infos_results()
+    i=0
+    for student in name:
+        for j in range(len(student)):
+            e = Label(results_frame,width=10, text=student[j])
+            e.grid(row=j + 1, column=i)
+            #e.insert(END, student[j])
+        i = i + 1
+
+    close_dbconnection()
+
     # main loop
     window.mainloop()
     print("display_result")

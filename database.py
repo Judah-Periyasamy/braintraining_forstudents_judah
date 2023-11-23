@@ -29,3 +29,13 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
         return True
     else:
         return False
+
+def infos_results():
+    infos = []
+    cursor = db_connection.cursor()
+    query = "Select username from results"
+    cursor.execute(query)
+    name = cursor.fetchall()
+    infos.append(name)
+    cursor.close()
+    return infos
