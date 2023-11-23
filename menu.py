@@ -20,13 +20,14 @@ a_title=[None, None, None] # array of title (ex: GEO01)
 
 dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_info_02, "info05": info05.open_window_info_05}
 
+number = 0
 # call other windows (exercices)
 def exercise(event,exer):
     dict_games[exer](window)
 
 #call display_results
 def display_result(event):
-    global results_frame
+    global results_frame, entry_user, entry_ex, up_frame
 
 
     # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
@@ -48,10 +49,12 @@ def display_result(event):
     lbl_title_results.grid(row=0, column=1, ipady=5, padx=40, pady=40)
 
     # Frames
-    filter_frame = Frame(window,bg="white", padx=10)
-    results_frame = Frame(window, bg="white", padx=10)
-    title_total_frame = Frame(window, bg="white", padx=10)
-    total_frame = Frame(window, bg="white", padx=10)
+    up_frame = Frame(window,bg="white")
+    down_frame = Frame(window, bg="white")
+    filter_frame = Frame(up_frame,bg="white", padx=10)
+
+    title_total_frame = Frame(down_frame, bg="white", padx=10)
+    total_frame = Frame(down_frame, bg="white", padx=10)
 
     #Filters Label
     lbl_user = Label(filter_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
@@ -59,14 +62,7 @@ def display_result(event):
     lbl_startdate = Label(filter_frame, text="Date début :", bg="white", padx=40, font=("Arial,11"))
     lbl_enddate = Label(filter_frame, text="Date fin :", bg="white", padx=40, font=("Arial,11"))
 
-    #Results labels
-    lbl_col_student = Label(results_frame, text="Élève", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_date_hour = Label(results_frame, text="Date heure", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_time = Label(results_frame, text="Temps", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_ex = Label(results_frame, text="Exercice", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_nbok = Label(results_frame, text="nb OK", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
-    lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
+
 
 
     #Totals labels
@@ -86,10 +82,12 @@ def display_result(event):
     entry_enddate = Entry(filter_frame)
 
     #Buttons
-    button_result = Button(filter_frame, text="Voir résultats", font=("Arial,11"))
+    button_result = Button(filter_frame, text="Voir résultats", font=("Arial,11"), command= show_info)
 
 
     # Place the elements
+    up_frame.grid(row=1,column=0,columnspan=3)
+    down_frame.grid(row=2,column=0,columnspan=3)
     #FILTER
     filter_frame.grid(row=1, columnspan=3)
 
@@ -106,6 +104,55 @@ def display_result(event):
     entry_enddate.grid(row=0, column=7)
 
     button_result.grid(row=1, column=0, pady=5)
+
+
+
+    #TOTAL
+    title_total_frame.grid(row=3, pady=10 ,columnspan=3)
+    title_total.grid(row=3, pady=10 ,columnspan=3)
+
+    total_frame.grid(row=4, pady=10 ,columnspan=3)
+
+    lbl_tot.grid(row=0, column=0, padx=(0, 10))
+    lbl_time.grid(row=0, column=1, padx=(0, 10))
+    lbl_nbok.grid(row=0, column=2, padx=(0, 10))
+    lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
+    lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
+
+
+
+
+    # main loop
+    window.mainloop()
+    print("display_result")
+
+# Function for the colors for progress bar
+def get_color(percentage):
+    if percentage >= 70:
+        return "#00FF00"  # Green
+    elif 40 <= percentage < 70:
+        return "#FFA500"  # Orange
+    else:
+        return "#FF0000"  # Red
+
+def show_info():
+    global results_frame,number
+    open_dbconnection()
+
+    name = infos_results(entry_user.get(), entry_ex.get())
+    if number > 0:
+        results_frame.destroy()
+    results_frame = Frame(up_frame, bg="white", padx=10)
+    number += 1
+
+    #Results labels
+    lbl_col_student = Label(results_frame, text="Élève", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_date_hour = Label(results_frame, text="Date heure", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_time = Label(results_frame, text="Temps", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_ex = Label(results_frame, text="Exercice", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_nbok = Label(results_frame, text="nb OK", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
 
     #RESULTS
     results_frame.grid(row=2, pady=10 ,columnspan=3)
@@ -124,63 +171,33 @@ def display_result(event):
 
     lbl_col_reussi.grid(row=0, column=6, padx=(0, 10))
 
-    #TOTAL
-    title_total_frame.grid(row=3, pady=10 ,columnspan=3)
-    title_total.grid(row=3, pady=10 ,columnspan=3)
-
-    total_frame.grid(row=4, pady=10 ,columnspan=3)
-
-    lbl_tot.grid(row=0, column=0, padx=(0, 10))
-    lbl_time.grid(row=0, column=1, padx=(0, 10))
-    lbl_nbok.grid(row=0, column=2, padx=(0, 10))
-    lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
-    lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
-
     lbl_col_progress = Label(results_frame, text="Progression", bg="white", padx=40, font=("Arial,11"))
     lbl_col_progress.grid(row=0, column=7, padx=(0, 10))
 
-    #Function for the colors for progress bar
-    def get_color(percentage):
-        if percentage >= 70:
-            return "#00FF00"  # Green
-        elif 40 <= percentage < 70:
-            return "#FFA500"  # Orange
-        else:
-            return "#FF0000"  # Red
-
-    #Insert the values taken from MySQL into Tkinter
-    open_dbconnection()
-    name = infos_results()
-    i=0
+    # Insert the values taken from MySQL into Tkinter
+    i = 0
     for student in name:
         for j in range(len(student)):
             for data in range(len(student[j])):
                 if data != 3:
-                    e = Label(results_frame,width=10, text=student[j][data])
+                    values = Label(results_frame, width=10, text=student[j][data])
                 else:
-                    e = Label(results_frame, width=10, text=get_exercice_name(student[j][data]))
-                e.grid(row=j + 1, column=i + data)
+                    values = Label(results_frame, width=10, text=get_exercice_name(student[j][data]))
+                values.grid(row=j + 1, column=i + data)
             try:
                 success_percentage = round(float(student[j][4]) * 100 / float(student[j][5]), 2)
-                e = Label(results_frame, width=10, text=f"{success_percentage}%")
+                values = Label(results_frame, width=10, text=f"{success_percentage}%")
             except:
-                e = Label(results_frame, width=10, text="0%")
-            e.grid(row=j + 1, column=i + 6)
+                values = Label(results_frame, width=10, text="0%")
+            values.grid(row=j + 1, column=i + 6)
 
-            #Creation of the bar progression
+            # Creation of the bar progression
             progress_rect = Canvas(results_frame, width=100, height=20, bg="white", bd=0, highlightthickness=0)
             progress_rect.create_rectangle(0, 0, success_percentage, 20, fill=get_color(success_percentage), outline="")
             progress_rect.grid(row=j + 1, column=7, pady=5)
-
-            #https://www.pythontutorial.net/tkinter/ttk-style/
-            #https: // anzeljg.github.io / rin2 / book2 / 2405 / docs / tkinter / create_rectangle.html
         i = i + 1
 
-    close_dbconnection()
 
-    # main loop
-    window.mainloop()
-    print("display_result")
 
 
 # Main window

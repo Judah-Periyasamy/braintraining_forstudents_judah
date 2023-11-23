@@ -31,18 +31,53 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
         return False
 
 def get_exercice_name(id):
-    cursor = db_connection.cursor()
-    query = "Select name from exercices where id=%s"
-    cursor.execute(query, (id, ))
-    result = cursor.fetchone()
+    open_dbconnection()
+    try:
+        cursor = db_connection.cursor()
+        query = "Select name from exercices where id=%s"
+        cursor.execute(query, (id, ))
+        result = cursor.fetchone()
+    except:
+        result=200
+    close_dbconnection()
     return result
 
-def infos_results():
+
+
+def get_exercise_id(name):
+    try:
+        cursor = db_connection.cursor()
+        query = "Select id from exercices where name=%s"
+        cursor.execute(query, (name, ))
+        result = cursor.fetchone()[0]
+    except:
+        result = "Failed"
+    return result
+
+def infos_results(pseudo, exercise):
+    open_dbconnection()
     infos = []
     cursor = db_connection.cursor()
-    query = "Select username, start_date_hour, duration, exercice_id, nb_ok, nb_total from results"
-    cursor.execute(query)
-    name = cursor.fetchall()
-    infos.append(name)
+
+    query = "SELECT username, start_date_hour, duration, exercice_id, nb_ok, nb_total FROM results "
+
+    if pseudo != "" and exercise != "":
+        query += "where username = %s AND exercice_id = %s"
+        cursor.execute(query, (pseudo, get_exercise_id(exercise)))
+    elif pseudo != "":
+        query += "where username = %s"
+        cursor.execute(query, (pseudo,))
+    elif exercise != "":
+        query += "where exercice_id = %s"
+        cursor.execute(query, (get_exercise_id(exercise),))
+    else:
+        # No conditions specified, fetch all results
+        cursor.execute(query)
+
+    result = cursor.fetchall()
+    infos.append(result)
+
+
     cursor.close()
+    close_dbconnection()
     return infos
