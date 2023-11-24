@@ -66,7 +66,7 @@ def display_result(event):
 
 
     #Totals labels
-    title_total = Label(title_total_frame,text="Total", bg="white", font=("Arial, 11"), width=10)
+    title_total = Label(title_total_frame, text="Total", bg="white", padx=40, font=("Arial,11"))
 
     lbl_tot = Label(total_frame, text="NbLignes", bg="white", padx=40, font=("Arial, 11"))
     lbl_time = Label(total_frame, text="Temps total", bg="white", padx=40, font=("Arial, 11"))
@@ -86,7 +86,7 @@ def display_result(event):
 
     # Place the elements
     up_frame.grid(row=1,column=0,columnspan=3)
-    down_frame.grid(row=2,column=0,columnspan=3)
+    down_frame.grid(row=2,column=0,pady=10,columnspan=3)
     #FILTER
     filter_frame.grid(row=1, columnspan=3)
 
