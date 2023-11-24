@@ -20,7 +20,9 @@ a_title=[None, None, None] # array of title (ex: GEO01)
 
 dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_info_02, "info05": info05.open_window_info_05}
 
+# Variables
 number = 0
+
 # call other windows (exercices)
 def exercise(event,exer):
     dict_games[exer](window)
@@ -63,8 +65,6 @@ def display_result(event):
     lbl_enddate = Label(filter_frame, text="Date fin :", bg="white", padx=40, font=("Arial,11"))
 
 
-
-
     #Totals labels
     title_total = Label(title_total_frame,text="Total", bg="white", font=("Arial, 11"), width=10)
 
@@ -83,7 +83,6 @@ def display_result(event):
 
     #Buttons
     button_result = Button(filter_frame, text="Voir résultats", font=("Arial,11"), command= show_info)
-
 
     # Place the elements
     up_frame.grid(row=1,column=0,columnspan=3)
@@ -105,8 +104,6 @@ def display_result(event):
 
     button_result.grid(row=1, column=0, pady=5)
 
-
-
     #TOTAL
     title_total_frame.grid(row=3, pady=10 ,columnspan=3)
     title_total.grid(row=3, pady=10 ,columnspan=3)
@@ -119,10 +116,7 @@ def display_result(event):
     lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
     lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
-
-
-
-    # main loop
+    #main loop
     window.mainloop()
     print("display_result")
 
@@ -135,6 +129,7 @@ def get_color(percentage):
     else:
         return "#FF0000"  # Red
 
+# Function that we will destroy each time the results values and it creates a new one
 def show_info():
     global results_frame,number
     open_dbconnection()
@@ -154,7 +149,7 @@ def show_info():
     lbl_col_nbtot = Label(results_frame, text="nb Total", bg="white", padx=40, font=("Arial,11"))
     lbl_col_reussi = Label(results_frame, text="% réussi", bg="white", padx=40, font=("Arial,11"))
 
-    #RESULTS
+    #RESULTS placements
     results_frame.grid(row=2, pady=10 ,columnspan=3)
 
     lbl_col_student.grid(row=0, column=0, padx=(0, 10))
@@ -171,6 +166,7 @@ def show_info():
 
     lbl_col_reussi.grid(row=0, column=6, padx=(0, 10))
 
+    #Progress
     lbl_col_progress = Label(results_frame, text="Progression", bg="white", padx=40, font=("Arial,11"))
     lbl_col_progress.grid(row=0, column=7, padx=(0, 10))
 
@@ -180,15 +176,15 @@ def show_info():
         for j in range(len(student)):
             for data in range(len(student[j])):
                 if data != 3:
-                    values = Label(results_frame, width=10, text=student[j][data])
+                    values = Label(results_frame, width=10, text=student[j][data]) #values label creation for the results
                 else:
-                    values = Label(results_frame, width=10, text=get_exercice_name(student[j][data]))
+                    values = Label(results_frame, width=10, text=get_exercice_name(student[j][data])) #values label creation for the results
                 values.grid(row=j + 1, column=i + data)
             try:
-                success_percentage = round(float(student[j][4]) * 100 / float(student[j][5]), 2)
-                values = Label(results_frame, width=10, text=f"{success_percentage}%")
+                success_percentage = round(float(student[j][4]) * 100 / float(student[j][5]), 2) #purcentage calculation
+                values = Label(results_frame, width=10, text=f"{success_percentage}%") #values label creation for (réussi)
             except:
-                values = Label(results_frame, width=10, text="0%")
+                values = Label(results_frame, width=10, text="0%") #values label creation for (réussi)
             values.grid(row=j + 1, column=i + 6)
 
             # Creation of the bar progression
