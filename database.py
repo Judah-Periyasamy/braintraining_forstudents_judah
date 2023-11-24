@@ -15,12 +15,11 @@ def open_dbconnection():
 def close_dbconnection():
     db_connection.close()
 
-
+# Function that will add a value row in the table results for each time we finish an exercice
 def add_results(username, duration,nb_ok, nb_total, title_exercice):
     cursor = db_connection.cursor()
     # Here we will create the now time
     date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
-
     query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id) values (%s, %s, %s, %s, %s, %s)"
     cursor.execute(query,(username, date_hour, duration, nb_ok, nb_total, title_exercice))
     affected_rows = cursor.rowcount
@@ -30,6 +29,7 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
     else:
         return False
 
+# Funtion that will get the name using the exercice id
 def get_exercice_name(id):
     open_dbconnection()
     try:
@@ -43,7 +43,7 @@ def get_exercice_name(id):
     return result
 
 
-
+# Funtion that will get the id using the exercice name
 def get_exercise_id(name):
     try:
         cursor = db_connection.cursor()
@@ -54,6 +54,7 @@ def get_exercise_id(name):
         result = "Failed"
     return result
 
+#Function that will get all the values stocked in the table results
 def infos_results(pseudo, exercise):
     open_dbconnection()
     infos = []
@@ -61,6 +62,7 @@ def infos_results(pseudo, exercise):
 
     query = "SELECT username, start_date_hour, duration, exercice_id, nb_ok, nb_total FROM results "
 
+    #Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
     if pseudo != "" and exercise != "":
         query += "where username = %s AND exercice_id = %s"
         cursor.execute(query, (pseudo, get_exercise_id(exercise)))

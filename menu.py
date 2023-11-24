@@ -189,8 +189,12 @@ def show_info():
 
             # Creation of the bar progression
             progress_rect = Canvas(results_frame, width=100, height=20, bg="white", bd=0, highlightthickness=0)
-            progress_rect.create_rectangle(0, 0, success_percentage, 20, fill=get_color(success_percentage), outline="")
+            if success_percentage == 0:
+                progress_rect.create_rectangle(0, 0, 1, 20, fill=get_color(success_percentage), outline="")
+            else:
+                progress_rect.create_rectangle(0, 0, success_percentage, 20, fill=get_color(success_percentage),outline="")
             progress_rect.grid(row=j + 1, column=7, pady=5)
+            #https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_rectangle.html
         i = i + 1
 
 
