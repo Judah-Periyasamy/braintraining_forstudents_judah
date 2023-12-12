@@ -172,6 +172,9 @@ def show_info():
     lbl_col_progress = Label(results_frame, text="Progression", bg="white", padx=40, font=("Arial,11"))
     lbl_col_progress.grid(row=0, column=7, padx=(0, 10))
 
+    lbl_col_progress_total = Label(total_frame, text="Progression", bg="white", padx=40, font=("Arial,11"))
+    lbl_col_progress_total.grid(row=0, column=5)
+
     # Insert the values taken from MySQL into Tkinter
     i = 0
     for student in name:
