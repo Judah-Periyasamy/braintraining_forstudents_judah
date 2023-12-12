@@ -11,6 +11,7 @@ import info05
 from database import *
 from tkinter import *
 import tkinter.font
+## from results import *
 
 # exercises array
 a_exercise=["geo01", "info02", "info05"]
@@ -23,14 +24,15 @@ dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_in
 # Variables
 number = 0
 
+
 # call other windows (exercices)
 def exercise(event,exer):
     dict_games[exer](window)
 
-#call display_results
-def display_result(event):
-    global results_frame, entry_user, entry_ex, up_frame
 
+# call display_results
+def display_result(event):
+    global results_frame, entry_user, entry_ex, up_frame, total_frame
 
     # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
     # window's start
@@ -131,7 +133,7 @@ def get_color(percentage):
 
 # Function that we will destroy each time the results values and it creates a new one
 def show_info():
-    global results_frame,number
+    global results_frame,number, total_frame
     open_dbconnection()
 
     name = infos_results(entry_user.get(), entry_ex.get())
@@ -197,6 +199,23 @@ def show_info():
             #https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_rectangle.html
         i = i + 1
 
+    totals = total_result(entry_user.get(), entry_ex.get())
+    for total in range (len(totals)):
+        values = Label(total_frame, width=10, text=totals[total])
+        values.grid(row=1, column=total)
+    try:
+        total_purcentage = round(float(totals[2]) * 100 / float(totals[3]), 0)
+        values = Label(total_frame, width=10, text=f"{total_purcentage}%")
+    except :
+        values = Label(total_frame, width=10, text="0%")
+    values.grid(row=1, column=4)
+
+    progress_rect = Canvas(total_frame, width=100, height=20, bg="white", bd=0, highlightthickness=0)
+    if total_purcentage == 0:
+        progress_rect.create_rectangle(0, 0, 1, 20, fill=get_color(total_purcentage), outline="")
+    else:
+        progress_rect.create_rectangle(0, 0, total_purcentage, 20, fill=get_color(total_purcentage), outline="")
+    progress_rect.grid(row=1, column=5)
 
 
 
