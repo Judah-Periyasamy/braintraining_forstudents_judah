@@ -1,6 +1,10 @@
 # Training (GEO01)
 # JCY oct 23
 # PRO DB PY
+"""
+Modified by Judah Periyasamy
+15/12/23
+"""
 
 import mysql.connector
 import tkinter as tk
