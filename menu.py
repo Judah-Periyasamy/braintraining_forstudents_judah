@@ -118,6 +118,8 @@ def display_result(event):
     lbl_nbtotal.grid(row=0, column=3, padx=(0, 10))
     lbl_purcenttot.grid(row=0, column=4, padx=(0, 10))
 
+    show_info()
+
     #main loop
     window.mainloop()
     print("display_result")
@@ -203,6 +205,9 @@ def show_info():
         i = i + 1
 
     totals = total_result(entry_user.get(), entry_ex.get())
+    for widget in total_frame.winfo_children():
+        if widget.grid_info()['row'] != 0:
+            widget.destroy()
     for total in range (len(totals)):
         values = Label(total_frame, width=10, text=totals[total])
         values.grid(row=1, column=total)

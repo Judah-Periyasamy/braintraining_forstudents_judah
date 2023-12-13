@@ -87,17 +87,17 @@ def infos_results(pseudo, exercise):
 def total_result(pseudo, exercise):
     open_dbconnection()
     cursor = db_connection.cursor()
-    query = "SELECT count(results.id), sum(duration),  sum(nb_ok), sum(nb_total) FROM results;"
+    query = "SELECT count(results.id), sum(duration),  sum(nb_ok), sum(nb_total) FROM results"
 
     #Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
     if pseudo != "" and exercise != "":
-        query += "where username = %s AND exercice_id = %s"
+        query += " where username = %s AND exercice_id = %s"
         cursor.execute(query, (pseudo, get_exercise_id(exercise)))
     elif pseudo != "":
-        query += "where username = %s"
+        query += " where username = %s"
         cursor.execute(query, (pseudo,))
     elif exercise != "":
-        query += "where exercice_id = %s"
+        query += " where exercice_id = %s"
         cursor.execute(query, (get_exercise_id(exercise),))
     else:
         # No conditions specified, fetch all results
