@@ -28,7 +28,14 @@ CREATE TABLE IF NOT EXISTS `projet_dbpy`.`exercices` (
   `name` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
-ENGINE = InnoDB;
+ENGINE = INNODB;
+
+
+/*Data for the table `exercices` */
+INSERT INTO `exercices` (`NAME`) VALUES
+('GEO01'),
+('INFO02'),
+('INFO05');
 
 
 -- -----------------------------------------------------
@@ -51,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `projet_dbpy`.`results` (
     REFERENCES `projet_dbpy`.`exercices` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
+ENGINE = INNODB;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;

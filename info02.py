@@ -1,6 +1,10 @@
 # Training (INFO02)
 # JCY oct 23
 # PRO DB PY
+"""
+Modified by Judah Periyasamy
+15/12/23
+"""
 
 import tkinter as tk
 import random

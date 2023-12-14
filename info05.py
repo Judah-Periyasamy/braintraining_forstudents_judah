@@ -1,6 +1,11 @@
 # Training (INFO05)
 # JCY oct 23
 # PRO DB PY
+"""
+Modified by Judah Periyasamy
+15/12/23
+"""
+
 import math
 import tkinter as tk
 from tkinter.messagebox import showinfo          # Les alertes
