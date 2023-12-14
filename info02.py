@@ -51,10 +51,21 @@ def save_game(event):
     # TODO
     open_dbconnection()
     global entry_pseudo, duration
-    username = entry_pseudo.get()
     title = 2
-    add_results(username, duration ,nbsuccess, nbtrials, title)
-    print("dans save")
+    username = entry_pseudo.get()
+    if username == "":
+        print("TEST")
+        messagebox.showinfo("Message", "Veuillez entrez un pseudo!!")
+    else:
+        try:
+           res = add_results(username, duration ,nbsuccess, nbtrials, title)
+           if res:
+               print("dans save")
+           else:
+                print("Echec de l'ajout.\n")
+        except Exception:
+            print("Echec de l'ajout.\n")
+
     close_dbconnection()
 
 
