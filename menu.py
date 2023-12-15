@@ -33,10 +33,10 @@ dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_in
 def display_results(event):
     subprocess.Popen(["python","results.py"])
 
-
 # call other windows (exercices)
 def exercise(event, exer):
     dict_games[exer](window)
+
 
 # Main window
 window = tk.Tk()

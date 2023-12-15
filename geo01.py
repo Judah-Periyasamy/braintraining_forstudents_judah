@@ -108,12 +108,12 @@ def save_game(event):
         try:
            res = add_results(username, duration ,nbsuccess, nbtrials, title)
            if res:
+               messagebox.showinfo("Message", "Exo Fini !!!")
                print("dans save")
            else:
                 print("Echec de l'ajout.\n")
         except Exception:
             print("Echec de l'ajout.\n")
-
     close_dbconnection()
 
 
