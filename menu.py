@@ -28,7 +28,7 @@ a_title = [None, None, None]  # array of title (ex: GEO01)
 dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_info_02,
               "info05": info05.open_window_info_05}
 
-
+# call results.py file
 def display_results(event):
     subprocess.Popen(["python","results.py"])
 

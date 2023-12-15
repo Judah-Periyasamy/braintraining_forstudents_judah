@@ -1,5 +1,6 @@
 """
-Creation and modify window
+PROJ_DBPY
+Creation values window
 Created by Judah Periyasamy
 15/12/23
 """
@@ -15,6 +16,8 @@ from tkinter import *
 import tkinter.font
 from tkinter.messagebox import *
 
+
+# Creation of a new window to create new values manually
 def create_result():
     global entry_user, entry_date, entry_time, entry_nb_ok, entry_nb_total, cbo_entry_exercice_create, create_win
 
@@ -107,6 +110,8 @@ def get_color(percentage):
     else:
         return "#FF0000"  # Red
 
+
+# Function to create new values manually
 def creation():
     open_dbconnection()
     global entry_user, entry_date, entry_time, entry_nb_ok, entry_nb_total, cbo_entry_exercice_create, create_win

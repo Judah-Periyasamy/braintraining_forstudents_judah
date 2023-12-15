@@ -1,3 +1,10 @@
+"""
+PROJ_DBPY
+Display results window
+Created by Judah Periyasamy
+15/12/23
+"""
+
 import tkinter as tk
 from database import *
 from tkinter import *
@@ -5,11 +12,13 @@ import tkinter.font
 from create_window import *
 import admin_window as admin
 
+
 # Class that will create the delete button for each row (Brad helped me a bit for this part)
 class DeleteButton:
     def __init__(self, res_frame, student_id, rowD, columnD):
         self.destroy_button = Button(res_frame, text="Effacer", command=lambda: refresh_data(student_id))
         self.destroy_button.grid(row=rowD, column=columnD, sticky="NSEW")
+
 
 # Class that will create the modify button for each row (Brad helped me a bit for this part)
 class ModifyButton:
@@ -18,6 +27,7 @@ class ModifyButton:
                                                                                              main_results_window))
         self.modify_button.grid(row=rowD, column=columnD, sticky="NSEW")
 
+
 # Function will call the admin_window fil so that we can modify or erase values
 def refresh_data(user_id, main_results_window=None):
     if main_results_window is not None:
@@ -25,6 +35,7 @@ def refresh_data(user_id, main_results_window=None):
     else:
         admin.modify_or_destroy(user_id)
     show_info()
+
 
 # Display the values
 def display_result():

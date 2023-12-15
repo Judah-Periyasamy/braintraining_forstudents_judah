@@ -1,3 +1,10 @@
+"""
+PROJ_DBPY
+Modify and Delete
+Created by Judah Periyasamy
+15/12/23
+"""
+
 import database
 import tkinter as tk
 import tkinter.font
@@ -5,9 +12,10 @@ from tkinter import *
 from tkinter import ttk, messagebox
 
 
+# Creation of a new window to modify a row
 def admin_window(parent_frame, user_id=None):
     new_result_window = Toplevel(parent_frame)
-    new_result_window.title("New Result")
+    new_result_window.title("Modifcation")
     new_result_window.geometry("1000x150")
 
     # Color definition
@@ -20,12 +28,6 @@ def admin_window(parent_frame, user_id=None):
     main_frame = tk.Frame(new_result_window, bg="white", padx=10)
     main_frame.pack()
 
-    # Widgets
-    # items = ["Pseudo", "Date heure", "Temps", "Exercise", "nb OK", "nb Total"]
-    # for item in range(len(items)):
-    #     info_item = Label(main_frame, text=items[item])
-    #     info_item.grid(row=0, column=0 + item)
-
     # Filters Label
     lbl_user = Label(main_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
     lbl_date = Label(main_frame, text="Date et Heure :", bg="white", padx=40, font=("Arial,11"))
@@ -33,18 +35,6 @@ def admin_window(parent_frame, user_id=None):
     lbl_exercice = Label(main_frame, text="Exercice :", bg="white", padx=40, font=("Arial,11"))
     lbl_nb_ok = Label(main_frame, text="nb_ok :", bg="white", padx=40, font=("Arial,11"))
     lbl_nb_total = Label(main_frame, text="nb_Total :", bg="white", padx=40, font=("Arial,11"))
-
-    # name_entry = tkinter.Entry(main_frame)
-    #
-    # date_entry = Entry(main_frame)
-    #
-    # temps_entry = Entry(main_frame)
-    #
-    # exercise_entry = Entry(main_frame)
-    #
-    # ok_entry = Entry(main_frame)
-    #
-    # total_entry = Entry(main_frame)
 
     # Filters Entry
     name_entry = Entry(main_frame)
@@ -87,9 +77,7 @@ def admin_window(parent_frame, user_id=None):
     elif exercice == 'INFO05':
         exercise_entry = 3
 
-    # for ins_entry in range(len(entries)):
-    #     entries[ins_entry].grid(row=1, column=ins_entry)
-
+    # Button
     finish_button = Button(main_frame, text="Valider", font=("Arial,11"),
                            command=lambda: modify_or_destroy(user_id,
                                                              data=[name_entry.get(),
@@ -104,6 +92,7 @@ def admin_window(parent_frame, user_id=None):
     new_result_window.mainloop()
 
 
+# Function will use the functions in database to modify or delete
 def modify_or_destroy(user_id, data=None, window=None):
     if data is not None:
         database.result_modification(user_id, data)
