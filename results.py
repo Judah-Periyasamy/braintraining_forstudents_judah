@@ -5,20 +5,20 @@ import tkinter.font
 from create_window import *
 import admin_window as admin
 
-
+# Class that will create the delete button for each row (Brad helped me a bit for this part)
 class DeleteButton:
     def __init__(self, res_frame, student_id, rowD, columnD):
         self.destroy_button = Button(res_frame, text="Effacer", command=lambda: refresh_data(student_id))
         self.destroy_button.grid(row=rowD, column=columnD, sticky="NSEW")
 
-
+# Class that will create the modify button for each row (Brad helped me a bit for this part)
 class ModifyButton:
     def __init__(self, res_frame, main_results_window, student_id, rowD, columnD):
         self.modify_button = Button(res_frame, text="Modifier", command=lambda: refresh_data(student_id,
                                                                                              main_results_window))
         self.modify_button.grid(row=rowD, column=columnD, sticky="NSEW")
 
-
+# Function will call the admin_window fil so that we can modify or erase values
 def refresh_data(user_id, main_results_window=None):
     if main_results_window is not None:
         admin.admin_window(main_results_window, user_id)
@@ -26,7 +26,7 @@ def refresh_data(user_id, main_results_window=None):
         admin.modify_or_destroy(user_id)
     show_info()
 
-
+# Display the values
 def display_result():
     # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
     global entry_user, entry_ex, up_frame, total_frame, results_frame, results_window
@@ -216,6 +216,7 @@ def show_info():
                 "%s = ModifyButton(results_frame, results_window, student[j][6], %d, %d)"
                 % (modify_button_name, j + 1, 9))
 
+    # Option 4 : Total calcul using the values from MySQL
     totals = total_result(entry_user.get(), entry_ex.get())
     for widget in total_frame.winfo_children():
         if widget.grid_info()['row'] != 0:

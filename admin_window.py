@@ -2,6 +2,7 @@ import database
 import tkinter as tk
 import tkinter.font
 from tkinter import *
+from tkinter import ttk, messagebox
 
 
 def admin_window(parent_frame, user_id=None):
@@ -20,29 +21,76 @@ def admin_window(parent_frame, user_id=None):
     main_frame.pack()
 
     # Widgets
-    items = ["Pseudo", "Date heure", "Temps", "Exercise", "nb OK", "nb Total"]
-    for item in range(len(items)):
-        info_item = Label(main_frame, text=items[item])
-        info_item.grid(row=0, column=0 + item)
+    # items = ["Pseudo", "Date heure", "Temps", "Exercise", "nb OK", "nb Total"]
+    # for item in range(len(items)):
+    #     info_item = Label(main_frame, text=items[item])
+    #     info_item.grid(row=0, column=0 + item)
 
-    name_entry = tkinter.Entry(main_frame)
+    # Filters Label
+    lbl_user = Label(main_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
+    lbl_date = Label(main_frame, text="Date et Heure :", bg="white", padx=40, font=("Arial,11"))
+    lbl_time = Label(main_frame, text="Temps :", bg="white", padx=40, font=("Arial,11"))
+    lbl_exercice = Label(main_frame, text="Exercice :", bg="white", padx=40, font=("Arial,11"))
+    lbl_nb_ok = Label(main_frame, text="nb_ok :", bg="white", padx=40, font=("Arial,11"))
+    lbl_nb_total = Label(main_frame, text="nb_Total :", bg="white", padx=40, font=("Arial,11"))
 
+    # name_entry = tkinter.Entry(main_frame)
+    #
+    # date_entry = Entry(main_frame)
+    #
+    # temps_entry = Entry(main_frame)
+    #
+    # exercise_entry = Entry(main_frame)
+    #
+    # ok_entry = Entry(main_frame)
+    #
+    # total_entry = Entry(main_frame)
+
+    # Filters Entry
+    name_entry = Entry(main_frame)
     date_entry = Entry(main_frame)
-
     temps_entry = Entry(main_frame)
 
-    exercise_entry = Entry(main_frame)
+    exercise_entry = tk.StringVar()
+    cbo_entry_exercice_create = ttk.Combobox(main_frame, textvariable=exercise_entry, font=("Arial", 10), width=15)
+    cbo_entry_exercice_create['values'] = ('GEO01', 'INFO02', 'INFO05')
+    cbo_entry_exercice_create['state'] = 'readonly'
 
     ok_entry = Entry(main_frame)
-
     total_entry = Entry(main_frame)
 
-    entries = [name_entry, date_entry, temps_entry, exercise_entry, ok_entry, total_entry]
+    # Place the elements
 
-    for ins_entry in range(len(entries)):
-        entries[ins_entry].grid(row=1, column=ins_entry)
+    lbl_user.grid(row=0, column=2, padx=(0, 10))
+    name_entry.grid(row=0, column=3)
 
-    finish_button = Button(main_frame, text="Finish",
+    lbl_date.grid(row=0, column=4, padx=(0, 10))
+    date_entry.grid(row=0, column=5)
+
+    lbl_time.grid(row=0, column=6, padx=(0, 10))
+    temps_entry.grid(row=0, column=7)
+
+    lbl_exercice.grid(row=1, column=2, padx=(0, 10))
+    cbo_entry_exercice_create.grid(row=1, column=3)
+
+    lbl_nb_ok.grid(row=1, column=4, padx=(0, 10))
+    ok_entry.grid(row=1, column=5)
+
+    lbl_nb_total.grid(row=1, column=6, padx=(0, 10))
+    total_entry.grid(row=1, column=7)
+
+    exercice = cbo_entry_exercice_create.get()
+    if exercice == 'GE001':
+        exercise_entry = 1
+    elif exercice == 'INFO02':
+        exercise_entry = 2
+    elif exercice == 'INFO05':
+        exercise_entry = 3
+
+    # for ins_entry in range(len(entries)):
+    #     entries[ins_entry].grid(row=1, column=ins_entry)
+
+    finish_button = Button(main_frame, text="Valider", font=("Arial,11"),
                            command=lambda: modify_or_destroy(user_id,
                                                              data=[name_entry.get(),
                                                                    date_entry.get(),
@@ -51,7 +99,8 @@ def admin_window(parent_frame, user_id=None):
                                                                    total_entry.get(),
                                                                    database.get_exercise_id(exercise_entry.get())],
                                                              window=new_result_window))
-    finish_button.grid(row=2, column=4)
+    finish_button.grid(row=2, column=7)
+
     new_result_window.mainloop()
 
 
