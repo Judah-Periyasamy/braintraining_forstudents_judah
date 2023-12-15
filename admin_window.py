@@ -10,7 +10,9 @@ def admin_window(parent_frame, user_id=None):
     new_result_window.geometry("1000x150")
 
     # Color definition
-    new_result_window.configure(bg="blue")
+    rgb_color = (139, 201, 194)
+    hex_color = '#%02x%02x%02x' % rgb_color  # translation in hexa
+    new_result_window.configure(bg=hex_color)
     new_result_window.grid_columnconfigure((0, 1, 2), minsize=300, weight=1)
 
     # Frames
