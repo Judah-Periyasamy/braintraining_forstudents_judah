@@ -7,6 +7,7 @@ import mysql.connector
 import time
 from geo01 import *
 
+
 # Function that will open a connection in MySQL
 def open_dbconnection():
     global db_connection
@@ -19,6 +20,7 @@ def open_dbconnection():
 # Function that will close the connection in MySQL
 def close_dbconnection():
     db_connection.close()
+
 
 # Function that will add a value row in the table results for each time we finish an exercice
 def add_results(username, duration,nb_ok, nb_total, title_exercice):
@@ -33,6 +35,7 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
         return True
     else:
         return False
+
 
 # Funtion that will get the name using the exercice id
 def get_exercice_name(id):
@@ -59,13 +62,14 @@ def get_exercise_id(name):
         result = "Failed"
     return result
 
+
 #Function that will get all the values stocked in the table results
 def infos_results(pseudo, exercise):
     open_dbconnection()
     infos = []
     cursor = db_connection.cursor()
 
-    query = "SELECT username, start_date_hour, duration, exercice_id, nb_ok, nb_total FROM results "
+    query = "SELECT username, start_date_hour, duration, exercice_id, nb_ok, nb_total, id FROM results "
 
     #Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
     if pseudo != "" and exercise != "":
@@ -83,11 +87,10 @@ def infos_results(pseudo, exercise):
 
     result = cursor.fetchall()
     infos.append(result)
-
-
     cursor.close()
     close_dbconnection()
     return infos
+
 
 def total_result(pseudo, exercise):
     open_dbconnection()
@@ -115,3 +118,34 @@ def total_result(pseudo, exercise):
     return total_data
 
 
+def result_deletion(id):
+    open_dbconnection()
+    cursor = db_connection.cursor()
+    query = "DELETE FROM results WHERE id=%s"
+    cursor.execute(query, (id,))
+    return
+
+
+def result_modification(user_id, dataset):
+    open_dbconnection()
+    data = []
+    for info in dataset:
+        data.append(info)
+    data.append(user_id)
+    cursor = db_connection.cursor()
+    query = "UPDATE results SET username = %s, start_date_hour = %s, duration = %s, nb_ok = %s, nb_total = %s, exercice_id = %s WHERE id=%s"
+    cursor.execute(query, data)
+
+
+def create_results(username, date_hour,duration,nb_ok, nb_total, title_exercice):
+    cursor = db_connection.cursor()
+    # Here we will create the now time
+    #date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
+    query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id) values (%s, %s, %s, %s, %s, %s)"
+    cursor.execute(query, (username, date_hour, duration, nb_ok, nb_total, title_exercice))
+    affected_rows = cursor.rowcount
+    cursor.close()
+    if affected_rows == 1:
+        return True
+    else:
+        return False
