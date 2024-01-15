@@ -5,7 +5,7 @@ Modified by Judah Periyasamy
 15/12/23
 """
 
-import mysql.connector
+import mysql.connector, bcrypt
 import time
 from geo01 import *
 
@@ -29,8 +29,8 @@ def add_results(username, duration,nb_ok, nb_total, title_exercice):
     cursor = db_connection.cursor()
     # Here we will create the now time
     date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
-    query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id) values (%s, %s, %s, %s, %s, %s)"
-    cursor.execute(query,(username, date_hour, duration, nb_ok, nb_total, title_exercice))
+    query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id, user_id) values (%s, %s, %s, %s, %s, %s, %s)"
+    cursor.execute(query,(username, date_hour, duration, nb_ok, nb_total, title_exercice, 1))
     affected_rows = cursor.rowcount
     cursor.close()
     if affected_rows == 1:
@@ -151,3 +151,36 @@ def create_results(username, date_hour,duration,nb_ok, nb_total, title_exercice)
         return True
     else:
         return False
+
+
+def login_user(username, password):
+    open_dbconnection()
+    cursor = db_connection.cursor()
+
+    query = "SELECT id, password, level FROM users WHERE username = %s"
+    cursor.execute(query, (username,))
+    user_data = cursor.fetchone()
+    cursor.close()
+    close_dbconnection()
+
+    if user_data and bcrypt.checkpw(password.encode('utf-8'), user_data[1].encode('utf-8')):
+        return {'id': user_data[0], 'username': username, 'level': user_data[2]}
+    else:
+        return None
+
+
+def create_user(username, password, level):
+    open_dbconnection()
+    cursor = db_connection.cursor()
+
+    salt = bcrypt.gensalt()
+
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
+
+    query = "INSERT INTO users (username, password, level, salt) VALUES (%s, %s, %s, %s)"
+    cursor.execute(query, (username, hashed_password.decode('utf-8'), level, salt.decode('utf-8')))
+
+    cursor.close()
+    close_dbconnection()
+
+#create_user('judah', 'judah', 1)
