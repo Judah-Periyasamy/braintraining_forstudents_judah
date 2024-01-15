@@ -166,7 +166,7 @@ def login_user(username, password):
     if user_data and bcrypt.checkpw(password.encode('utf-8'), user_data[1].encode('utf-8')):
         return {'id': user_data[0], 'username': username, 'level': user_data[2]}
     else:
-        return None
+        return False
 
 
 def create_user(username, password, level):

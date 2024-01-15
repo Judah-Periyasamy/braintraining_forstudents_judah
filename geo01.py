@@ -97,7 +97,7 @@ def next_point(event):
 
 def save_game(event):
     # TODO
-    open_dbconnection()
+    database.open_dbconnection()
     global entry_pseudo, duration
     title = 1
     username = entry_pseudo.get()
@@ -106,7 +106,7 @@ def save_game(event):
         messagebox.showinfo("Message", "Veuillez entrez un pseudo!!")
     else:
         try:
-           res = add_results(username, duration ,nbsuccess, nbtrials, title)
+           res = database.add_results(username, duration ,nbsuccess, nbtrials, title)
            if res:
                messagebox.showinfo("Message", "Exo Fini !!!")
                print("dans save")
@@ -114,7 +114,7 @@ def save_game(event):
                 print("Echec de l'ajout.\n")
         except Exception:
             print("Echec de l'ajout.\n")
-    close_dbconnection()
+    database.close_dbconnection()
 
 
 def display_timer():
