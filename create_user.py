@@ -30,6 +30,7 @@ def create_user_window():
         # Create the new user
         create_user(new_username, new_password, level)
         print(f"Utilisateur créé avec le nom {new_username} et le niveau {level}")
+        messagebox.showinfo("Creation réussie",f"Utilisateur créé avec le nom {new_username} et le niveau {level}")
 
         # Close the create user window
         create_user_window.destroy()
