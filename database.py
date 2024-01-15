@@ -114,7 +114,7 @@ def total_result(pseudo, exercise):
         cursor.execute(query)
 
     results = cursor.fetchall()[0]
-    total_time = time.strftime("%H:%M:%S", time.gmtime(results[1]))
+    total_time = time.strftime("%H:%M:%S", time.gmtime(float(results[1])))
     total_data = (results[0], total_time, int(results[2]), int(results[3]))
     cursor.close()
     return total_data

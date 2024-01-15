@@ -207,7 +207,11 @@ def show_info():
             values.grid(row=j + 1, column=6)
 
             # Creation of the bar progression
-            success_percentage = round(float(student[j][4]) * 100 / float(student[j][5]), 2)  # purcentage calculation
+            try:
+                accuracy = float(student[j][4]) * 100 / float(student[j][5])
+            except ZeroDivisionError:
+                accuracy = 0
+            success_percentage = round(accuracy, 2)  # purcentage calculation
             progress_rect = Canvas(results_frame, width=100, height=20, bg="white", bd=0, highlightthickness=0)
             if success_percentage == 0:
                 progress_rect.create_rectangle(0, 0, 1, 20, fill=get_color(success_percentage), outline="")
