@@ -196,26 +196,21 @@ def sl_v(event):
     display()
 
 
-def save_game(event):
-    #TODO
-    open_dbconnection()
+def save_game(event, username):
+    # TODO
+    database.open_dbconnection()
     global entry_pseudo, duration
     title = 3
-    username = entry_pseudo.get()
-    if username == "":
-        print("TEST")
-        messagebox.showinfo("Message", "Veuillez entrez un pseudo!!")
-    else:
-        try:
-           res = add_results(username, duration ,nbsuccess, nbtrials, title)
-           if res:
-               print("dans save")
-           else:
-                print("Echec de l'ajout.\n")
-        except Exception:
+    try:
+       res = database.add_results(username, duration, nbsuccess, nbtrials, title)
+       if res:
+           messagebox.showinfo("Message", "Exo Fini !!!")
+           print("dans save")
+       else:
             print("Echec de l'ajout.\n")
-
-    close_dbconnection()
+    except Exception:
+        print("Echec de l'ajout.\n")
+    database.close_dbconnection()
 
 
 def display_timer():
@@ -295,7 +290,7 @@ def open_window_info_05(window, username):
     btn_next.bind("<Button-1>", next_color)
     entry_response.bind("<Return>", test)
     slider_v.bind("<ButtonRelease-1>", sl_v)
-    btn_finish.bind("<Button-1>", save_game)
+    btn_finish.bind("<Button-1>", lambda e: save_game(e, username))
 
     # main loop
     window_info05.mainloop()
