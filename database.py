@@ -169,10 +169,9 @@ def login_user(username, password):
         return False
 
 
-def create_user(username, password):
+def create_user(username, password, level=1):
     open_dbconnection()
     cursor = db_connection.cursor()
-    level = 1
     salt = bcrypt.gensalt()
 
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
@@ -199,3 +198,15 @@ def update_user_info(username, level):
         # messagebox.showerror("Erreur", f"Erreur lors de la mise à jour des informations : {e}")
         print("ERROR")
     close_dbconnection()
+
+
+def check_admin_exists():
+    # Vérifie si un compte administrateur existe déjà
+    open_dbconnection()
+    cursor = db_connection.cursor()
+    query = "SELECT * FROM users WHERE username = 'Admin' AND level = 2"
+    cursor.execute(query)
+    admin_exists = cursor.fetchone()
+    cursor.close()
+    close_dbconnection()
+    return admin_exists

@@ -12,6 +12,11 @@ from create_user import *
 import menu as menu_api
 
 
+def create_default_admin():
+    # Crée un compte administrateur par défaut
+    create_user('Admin', 'Pa$$w0rd', 2)
+
+
 def show():
     entry_pass.configure(show='')
     check.configure(command=hide, text='hide password')
@@ -95,6 +100,11 @@ def login_account():
     # main loop
     login_window.mainloop()
 
+
+# Vérifie si un compte administrateur existe
+if not check_admin_exists():
+    # Crée un compte administrateur par défaut si nécessaire
+    create_default_admin()
 
 # Appeler la fonction pour lancer la fenêtre de connexion
 if __name__ == "__main__":
