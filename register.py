@@ -26,12 +26,13 @@ def authenticate_user():
 
         # Lancer la fenêtre principale avec le nom d'utilisateur
         login_window.destroy()
-        menu_api.start_main_window(username)
+        menu_api.start_main_window(user)
 
 
     else:
         # Échec de la connexion, afficher un message d'erreur
         messagebox.showerror("Échec de la connexion", "Échec de la connexion. Vérifiez les informations d'identification.")
+
 
 def login_account():
     global entry_username, login_window, entry_pass, check

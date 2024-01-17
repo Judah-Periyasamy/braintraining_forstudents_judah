@@ -14,6 +14,7 @@ import info05
 from database import *
 import subprocess
 from tkinter import *
+from register import *
 
 # exercises array
 a_exercise = ["geo01", "info02", "info05"]
@@ -26,17 +27,25 @@ dict_games = {"geo01": geo01.open_window_geo_01, "info02": info02.open_window_in
 
 
 # call results.py file
-def display_results(event):
-    subprocess.Popen(["python", "results.py"])
+def display_results(event, username, privilege):
+    from results import display_result
+    display_result(username, privilege)
 
 
 # call other windows (exercices)
-def exercise(event, exer):
-    dict_games[exer](window)
+def exercise(event, exer, username):
+    dict_games[exer](window, username)
+
+def logout():
+    # Fermer la fenêtre principale
+    window.destroy()
+
+    # Relancer la fenêtre de connexion
+    login_account()
 
 
-def launch_main_window(username):
-    global window
+def launch_main_window(username, privilege):
+    global window, entry_username
     # Main window
     window = tk.Tk()
     window.title("Training, entrainement cérébral")
@@ -61,23 +70,24 @@ def launch_main_window(username):
         albl_image[ex] = tk.Label(window, image=a_image[ex])  # put image on label
         albl_image[ex].grid(row=2 + 2 * (ex // 3), column=ex % 3, padx=40, pady=10)  # 3 label per row
         albl_image[ex].bind("<Button-1>",
-                            lambda event, ex=ex: exercise(event=None, exer=a_exercise[ex]))  # link to others .py
+                            lambda event, ex=ex: exercise(event=None, exer=a_exercise[ex], username=username))  # link to others .py
         print(a_exercise[ex])
 
     # Buttons, display results & quit
     btn_display = tk.Button(window, text="Display results", font=("Arial", 15))
     btn_display.grid(row=1 + 2 * len(a_exercise) // 3, column=1)
-    btn_display.bind("<Button-1>", lambda e: display_results(e))
+    btn_display.bind("<Button-1>", lambda e: display_results(e, username, privilege))
 
     btn_finish = tk.Button(window, text="Quitter", font=("Arial", 15))
     btn_finish.grid(row=2 + 2 * len(a_exercise) // 3, column=1)
     btn_finish.bind("<Button-1>", quit)
 
+    btn_logout = tk.Button(window, text="Logout", font=("Arial", 15), command=logout)
+    btn_logout.grid(row=5, column=1, pady=10)
+
     return window
 
 
-def start_main_window(username):
-    nickname = username
-    print(nickname)
-    window_bis = launch_main_window(nickname)
+def start_main_window(user):
+    window_bis = launch_main_window(user["username"], user["level"])
     window_bis.mainloop()

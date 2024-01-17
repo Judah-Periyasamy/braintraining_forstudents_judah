@@ -22,9 +22,9 @@ def create_user_window():
         level = level_combobox.get()  # Get the selected level from the combobox
 
         if level == 'Prof':
-            level = 1
-        else:
             level = 2
+        else:
+            level = 1
         # Perform validation on the input if needed
 
         # Create the new user

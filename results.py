@@ -12,7 +12,6 @@ import tkinter.font
 from create_window import *
 import admin_window as admin
 
-
 # Class that will create the delete button for each row (Brad helped me a bit for this part)
 class DeleteButton:
     def __init__(self, res_frame, student_id, rowD, columnD):
@@ -38,9 +37,11 @@ def refresh_data(user_id, main_results_window=None):
 
 
 # Display the values
-def display_result():
+def display_result(user, prvlg):
     # INSIDE WE WILL CREATE A NEW PAGE FOR THE RESULTS DISPLAY
-    global entry_user, entry_ex, up_frame, total_frame, results_frame, results_window
+    global entry_user, entry_ex, up_frame, total_frame, results_frame, results_window, username, privilege
+    username = user
+    privilege = prvlg
     # results_window's start
     results_window = Tk()
 
@@ -81,7 +82,7 @@ def display_result():
     lbl_nbtotal = Label(total_frame, text="Nb Total", bg="white", padx=40, font=("Arial, 11"))
     lbl_purcenttot = Label(total_frame, text="% Total", bg="white", padx=40, font=("Arial, 11"))
 
-    # Filters Entry
+    # Filters
     entry_user = Entry(filter_frame)
     entry_ex = Entry(filter_frame)
     entry_startdate = Entry(filter_frame)
@@ -98,8 +99,10 @@ def display_result():
     filter_frame.grid(row=1, columnspan=3)
 
     lbl_user.grid(row=0, column=0, padx=(0, 10))
-    entry_user.grid(row=0, column=1)
-
+    if privilege != 1:
+        entry_user.grid(row=0, column=1)
+    else:
+        print("Nope")
     lbl_ex.grid(row=0, column=2, padx=(0, 10))
     entry_ex.grid(row=0, column=3)
 
@@ -147,7 +150,10 @@ def get_color(percentage):
 def show_info():
     global total_frame
     open_dbconnection()
-    name = infos_results(entry_user.get(), entry_ex.get())
+    if privilege != 1:
+        name = infos_results(entry_user.get(), entry_ex.get())
+    else:
+        name = infos_results(username, entry_ex.get())
 
     for widget in results_frame.winfo_children():
         if widget.grid_info()['row'] != 0:
@@ -232,7 +238,11 @@ def show_info():
                 % (modify_button_name, j + 1, 9))
 
     # Option 4 : Total calcul using the values from MySQL
-    totals = total_result(entry_user.get(), entry_ex.get())
+
+    if privilege != 1:
+        totals = total_result(entry_user.get(), entry_ex.get())
+    else:
+        totals = total_result(username, entry_ex.get())
     for widget in total_frame.winfo_children():
         if widget.grid_info()['row'] != 0:
             widget.destroy()
@@ -253,7 +263,3 @@ def show_info():
     else:
         progress_rect.create_rectangle(0, 0, total_purcentage, 20, fill=get_color(total_purcentage), outline="")
     progress_rect.grid(row=1, column=5)
-
-
-if __name__ == "__main__":
-    display_result()

@@ -99,7 +99,7 @@ def display_timer():
     window_info02.after(1000, display_timer)  # recommencer après 15 ms
 
 
-def open_window_info_02(window):
+def open_window_info_02(window, username):
     global window_info02, lbl_duration, lbl_result, entry_n2, label_u2, label_n1, hex_color, start_date, entry_pseudo
     window_info02 = tk.Toplevel(window)
 
@@ -119,9 +119,9 @@ def open_window_info_02(window):
     lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
 
     tk.Label(window_info02, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5)
-    entry_pseudo = tk.Entry(window_info02, font=("Arial", 15))
-    # entry_pseudo.pack(ipadx=2, ipady=10, padx=5,pady=5)
-    entry_pseudo.grid(row=1, column=1)
+    lbl_pseudo = tk.Label(window_info02, text=username, font=("Arial", 15))
+    lbl_pseudo.grid(row=1, column=1)
+
 
     lbl_result = tk.Label(window_info02, text=f"{pseudo}  Essais réussis : 0/0", font=("Arial", 15))
     lbl_result.grid( row=1, column=2,columnspan=3, ipady=5, padx=20,pady=20)

@@ -227,7 +227,7 @@ def display_timer():
     window_info05.after(1000, display_timer) #recommencer après 15 ms
 
 
-def open_window_info_05(window):
+def open_window_info_05(window, username):
     global window_info05, lbl_duration, lbl_result, hex_color, start_date, slider_r, slider_g, slider_b, slider_v, entry_response, canvas, entry_pseudo
     window_info05 = tk.Toplevel(window)
     window_info05.title("La couleur perdue")
@@ -246,8 +246,9 @@ def open_window_info_05(window):
     lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
 
     tk.Label(window_info05, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5, sticky='E')
-    entry_pseudo = tk.Entry(window_info05, font=("Arial", 15))
-    entry_pseudo.grid(row=1, column=1,sticky='W')
+    lbl_pseudo = tk.Label(window_info05, text=username, font=("Arial", 15))
+    lbl_pseudo.grid(row=1, column=1)
+
 
     lbl_result = tk.Label(window_info05, text=f"Essais réussis : 0/0", font=("Arial", 15))
     lbl_result.grid( row=1, column=2, ipady=5, padx=20,pady=10)

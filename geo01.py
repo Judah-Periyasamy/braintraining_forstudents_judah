@@ -95,25 +95,20 @@ def next_point(event):
     lbl_target.configure(text=f"Cliquez sur le point ({round(target_x, 1)}, {round(target_y, 1)}). Echelle x -10 à +10, y-5 à +5")
 
 
-def save_game(event):
+def save_game(event, username):
     # TODO
     database.open_dbconnection()
     global entry_pseudo, duration
     title = 1
-    username = entry_pseudo.get()
-    if username == "":
-        print("TEST")
-        messagebox.showinfo("Message", "Veuillez entrez un pseudo!!")
-    else:
-        try:
-           res = database.add_results(username, duration ,nbsuccess, nbtrials, title)
-           if res:
-               messagebox.showinfo("Message", "Exo Fini !!!")
-               print("dans save")
-           else:
-                print("Echec de l'ajout.\n")
-        except Exception:
+    try:
+       res = database.add_results(username, duration, nbsuccess, nbtrials, title)
+       if res:
+           messagebox.showinfo("Message", "Exo Fini !!!")
+           print("dans save")
+       else:
             print("Echec de l'ajout.\n")
+    except Exception:
+        print("Echec de l'ajout.\n")
     database.close_dbconnection()
 
 
@@ -126,7 +121,7 @@ def display_timer():
     window_geo01.after(1000, display_timer) #recommencer après 15 ms
 
 
-def open_window_geo_01(window):
+def open_window_geo_01(window, username):
     # window = tk.Tk()
     global window_geo01, hex_color, lbl_title, lbl_duration, lbl_result, lbl_target, canvas, start_date, entry_pseudo
     window_geo01 = tk.Toplevel(window)
@@ -147,8 +142,8 @@ def open_window_geo_01(window):
     lbl_duration.grid(row=0,column=2, ipady=5, padx=10,pady=10)
 
     tk.Label(window_geo01, text='Pseudo:', font=("Arial", 15)).grid(row=1, column=0, padx=5, pady=5)
-    entry_pseudo = tk.Entry(window_geo01, font=("Arial", 15))
-    entry_pseudo.grid(row=1, column=1)
+    lbl_pseudo = tk.Label(window_geo01, text=username, font=("Arial", 15))
+    lbl_pseudo.grid(row=1, column=1)
 
     lbl_result = tk.Label(window_geo01, text=f"Essais réussis : 0/0", font=("Arial", 15))
     lbl_result.grid(row=1, column=3, padx=5, pady=5, columnspan=4)
@@ -174,7 +169,7 @@ def open_window_geo_01(window):
     # binding actions (canvas & buttons)
     canvas.bind("<Button-1>", canvas_click)
     btn_next.bind("<Button-1>", next_point)
-    btn_finish.bind("<Button-1>", save_game)
+    btn_finish.bind("<Button-1>", lambda e: save_game(e, username))
 
     # main loop
     window_geo01.mainloop()
