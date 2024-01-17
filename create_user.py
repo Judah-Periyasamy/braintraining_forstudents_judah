@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import messagebox
 from database import *
 from passlib.hash import bcrypt
 
@@ -16,21 +16,17 @@ def hide():
 
 def create_user_window():
     global entry_new_pass, check
+
     def create_user_action():
         new_username = entry_new_username.get()
         new_password = entry_new_pass.get()
-        level = level_combobox.get()  # Get the selected level from the combobox
 
-        if level == 'Prof':
-            level = 2
-        else:
-            level = 1
         # Perform validation on the input if needed
 
         # Create the new user
-        create_user(new_username, new_password, level)
-        print(f"Utilisateur créé avec le nom {new_username} et le niveau {level}")
-        messagebox.showinfo("Creation réussie",f"Utilisateur créé avec le nom {new_username} et le niveau {level}")
+        create_user(new_username, new_password)
+        print(f"Utilisateur créé avec le nom {new_username}")
+        messagebox.showinfo("Creation réussie", f"Utilisateur créé avec le nom {new_username}")
 
         # Close the create user window
         create_user_window.destroy()
@@ -52,15 +48,9 @@ def create_user_window():
 
     lbl_new_username = tk.Label(infos_frame, text="Nom d'utilisateur: ", bg="white", padx=40, font=("Arial,11"))
     lbl_new_password = tk.Label(infos_frame, text="Mot de passe: ", bg="white", padx=40, font=("Arial,11"))
-    lbl_level = tk.Label(infos_frame, text="Niveau: ", bg="white", padx=40, font=("Arial,11"))
 
     entry_new_username = tk.Entry(infos_frame)
     entry_new_pass = tk.Entry(infos_frame, show="*")
-
-    # Combobox for level (Prof or Eleve)
-    level_options = ["Prof", "Eleve"]
-    level_combobox = ttk.Combobox(infos_frame, values=level_options, state="readonly")
-    level_combobox.set(level_options[0])  # Default value
 
     check = tk.Checkbutton(infos_frame, text='Afficher le mot de passe', command=show)
     btn_create_user = tk.Button(infos_frame, text="Créer utilisateur", command=create_user_action)
@@ -73,13 +63,7 @@ def create_user_window():
     lbl_new_password.grid(row=1, column=0, padx=(0, 10))
     entry_new_pass.grid(row=1, column=1)
 
-    lbl_level.grid(row=2, column=0, padx=(0, 10))
-    level_combobox.grid(row=2, column=1)
-
     check.grid(row=3, column=0, columnspan=2)
     btn_create_user.grid(row=4, column=1, pady=10)
 
     create_user_window.mainloop()
-
-
-

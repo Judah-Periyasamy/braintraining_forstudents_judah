@@ -169,10 +169,10 @@ def login_user(username, password):
         return False
 
 
-def create_user(username, password, level):
+def create_user(username, password):
     open_dbconnection()
     cursor = db_connection.cursor()
-
+    level = 1
     salt = bcrypt.gensalt()
 
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salt)
