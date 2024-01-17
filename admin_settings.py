@@ -37,10 +37,6 @@ def settings():
     combo_player_level = ttk.Combobox(window_settings, values=levels, state="readonly")
     combo_player_level.pack(pady=10)
 
-    # Entry for help
-    label_player_level = ttk.Label(window_settings, text="Niveaux :1 = Eleve | 2 = Prof ")
-    label_player_level.pack(pady=5)
-
     # Button to save player info
     save_button = ttk.Button(window_settings, text="Sauvegarder", command=save_player_info)
     save_button.pack(pady=20)
@@ -57,8 +53,8 @@ def save_player_info():
         messagebox.showerror("Erreur", "Veuillez remplir tous les champs.")
         return
 
-    # Sauvegarder les informations du joueur dans la base de données ou le fichier de configuration
-    # (en fonction de la façon dont vous souhaitez stocker ces informations)
+    # Sauvegarder les informations du joueur dans la base de données
+    database.update_user_info(player_name, 2 if player_level == "Prof" else 1)
 
     # Fermer la fenêtre des paramètres
     window_settings.destroy()

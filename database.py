@@ -25,12 +25,12 @@ def close_dbconnection():
 
 
 # Function that will add a value row in the table results for each time we finish an exercice
-def add_results(username, duration,nb_ok, nb_total, title_exercice):
+def add_results(username, duration, nb_ok, nb_total, title_exercice):
     cursor = db_connection.cursor()
     # Here we will create the now time
     date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
     query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id, user_id) values (%s, %s, %s, %s, %s, %s, %s)"
-    cursor.execute(query,(username, date_hour, duration, nb_ok, nb_total, title_exercice, 1))
+    cursor.execute(query, (username, date_hour, duration, nb_ok, nb_total, title_exercice, 1))
     affected_rows = cursor.rowcount
     cursor.close()
     if affected_rows == 1:
@@ -45,10 +45,10 @@ def get_exercice_name(id):
     try:
         cursor = db_connection.cursor()
         query = "Select name from exercices where id=%s"
-        cursor.execute(query, (id, ))
+        cursor.execute(query, (id,))
         result = cursor.fetchone()
     except:
-        result=200
+        result = 200
     close_dbconnection()
     return result
 
@@ -58,14 +58,14 @@ def get_exercise_id(name):
     try:
         cursor = db_connection.cursor()
         query = "Select id from exercices where name=%s"
-        cursor.execute(query, (name, ))
+        cursor.execute(query, (name,))
         result = cursor.fetchone()[0]
     except:
         result = "Failed"
     return result
 
 
-#Function that will get all the values stocked in the table results
+# Function that will get all the values stocked in the table results
 def infos_results(pseudo, exercise):
     open_dbconnection()
     infos = []
@@ -73,7 +73,7 @@ def infos_results(pseudo, exercise):
 
     query = "SELECT username, start_date_hour, duration, exercice_id, nb_ok, nb_total, id FROM results "
 
-    #Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
+    # Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
     if pseudo != "" and exercise != "":
         query += "where username = %s AND exercice_id = %s"
         cursor.execute(query, (pseudo, get_exercise_id(exercise)))
@@ -99,7 +99,7 @@ def total_result(pseudo, exercise):
     cursor = db_connection.cursor()
     query = "SELECT count(results.id), sum(duration),  sum(nb_ok), sum(nb_total) FROM results"
 
-    #Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
+    # Here we are gonna separates conditions for each scenario using the where condition and then added to the main query
     if pseudo != "" and exercise != "":
         query += " where username = %s AND exercice_id = %s"
         cursor.execute(query, (pseudo, get_exercise_id(exercise)))
@@ -139,10 +139,10 @@ def result_modification(user_id, dataset):
     cursor.execute(query, data)
 
 
-def create_results(username, date_hour,duration,nb_ok, nb_total, title_exercice):
+def create_results(username, date_hour, duration, nb_ok, nb_total, title_exercice):
     cursor = db_connection.cursor()
     # Here we will create the now time
-    #date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
+    # date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
     query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id) values (%s, %s, %s, %s, %s, %s)"
     cursor.execute(query, (username, date_hour, duration, nb_ok, nb_total, title_exercice))
     affected_rows = cursor.rowcount
@@ -183,4 +183,19 @@ def create_user(username, password):
     cursor.close()
     close_dbconnection()
 
-#create_user('judah', 'judah', 1)
+
+# create_user('judah', 'judah', 1)
+
+def update_user_info(username, level):
+    open_dbconnection()
+    try:
+        cursor = db_connection.cursor()
+        query = "UPDATE users SET level = %s WHERE username = %s"
+        cursor.execute(query, (level, username))
+        db_connection.commit()
+        cursor.close()
+        # messagebox.showinfo("Succès", "Les informations de l'utilisateur ont été mises à jour avec succès.")
+    except Exception as e:
+        # messagebox.showerror("Erreur", f"Erreur lors de la mise à jour des informations : {e}")
+        print("ERROR")
+    close_dbconnection()
