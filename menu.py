@@ -15,6 +15,7 @@ from database import *
 import subprocess
 from tkinter import *
 from register import *
+from admin_settings import *
 
 # exercises array
 a_exercise = ["geo01", "info02", "info05"]
@@ -82,8 +83,13 @@ def launch_main_window(username, privilege):
     btn_finish.grid(row=2 + 2 * len(a_exercise) // 3, column=1)
     btn_finish.bind("<Button-1>", quit)
 
+    # Check if the user is a Prof and display settings button accordingly
+    if privilege == 2:  # Assuming level 2 corresponds to Prof
+        btn_settings = tk.Button(window, text="Paramètres", font=("Arial", 15), command=settings)
+        btn_settings.grid(row=5, column=1, pady=10)
+
     btn_logout = tk.Button(window, text="Logout", font=("Arial", 15), command=logout)
-    btn_logout.grid(row=5, column=1, pady=10)
+    btn_logout.grid(row=6, column=1, pady=10)
 
     return window
 
