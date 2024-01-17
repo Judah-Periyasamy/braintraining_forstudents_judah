@@ -198,9 +198,7 @@ def update_user_info(username, level):
         cursor.execute(query, (level, username))
         db_connection.commit()
         cursor.close()
-        # messagebox.showinfo("Succès", "Les informations de l'utilisateur ont été mises à jour avec succès.")
     except Exception as e:
-        # messagebox.showerror("Erreur", f"Erreur lors de la mise à jour des informations : {e}")
         print("ERROR")
     close_dbconnection()
 

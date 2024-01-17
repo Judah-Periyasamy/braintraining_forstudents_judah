@@ -52,6 +52,8 @@ def save_player_info():
     if not player_name or not player_level:
         messagebox.showerror("Erreur", "Veuillez remplir tous les champs.")
         return
+    else:
+        messagebox.showinfo("Succès", "Les informations de l'utilisateur ont été mises à jour avec succès.")
 
     # Save player information to database
     database.update_user_info(player_name, 2 if player_level == "Prof" else 1)
