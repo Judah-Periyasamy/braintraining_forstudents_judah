@@ -7,19 +7,20 @@ Created by Judah Periyasamy
 
 import tkinter as tk
 from tkinter import messagebox
-
 from database import *
 from create_user import *
-
 import menu as menu_api
+
 
 def show():
     entry_pass.configure(show='')
     check.configure(command=hide, text='hide password')
 
+
 def hide():
     entry_pass.configure(show='*')
     check.configure(command=show, text='show password')
+
 
 def authenticate_user():
     username = entry_username.get()
@@ -29,7 +30,8 @@ def authenticate_user():
 
     if user != False:
         # Utilisateur authentifié, afficher un message de réussite
-        messagebox.showinfo("Connexion réussie", f"Connexion réussie en tant que {username} avec le niveau {user['level']}")
+        messagebox.showinfo("Connexion réussie",
+                            f"Connexion réussie en tant que {username} avec le niveau {user['level']}")
 
         # Lancer la fenêtre principale avec le nom d'utilisateur
         login_window.destroy()
@@ -38,7 +40,8 @@ def authenticate_user():
 
     else:
         # Échec de la connexion, afficher un message d'erreur
-        messagebox.showerror("Échec de la connexion", "Échec de la connexion. Vérifiez les informations d'identification.")
+        messagebox.showerror("Échec de la connexion",
+                             "Échec de la connexion. Vérifiez les informations d'identification.")
 
 
 def login_account():
