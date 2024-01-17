@@ -5,34 +5,37 @@ Created by Judah Periyasamy
 18/01/24
 """
 
-
 import tkinter as tk
 from tkinter import messagebox
 from database import *
 from passlib.hash import bcrypt
 
 
+# Function to see the password
 def show():
     entry_new_pass.configure(show='')
     entry_confirm_pass.configure(show='')
     check.configure(command=hide, text='hide password')
 
 
+# Function to hide the password
 def hide():
     entry_new_pass.configure(show='*')
     entry_confirm_pass.configure(show='*')
     check.configure(command=show, text='show password')
 
 
+# Function to sign in
 def create_user_window():
     global entry_new_pass, entry_confirm_pass, check
 
+    # Function that will create a new user
     def create_user_action():
         new_username = entry_new_username.get()
         new_password = entry_new_pass.get()
         confirm_password = entry_confirm_pass.get()
 
-        # Vérifier si les mots de passe correspondent
+        # Check if passwords match
         if new_password != confirm_password:
             messagebox.showerror("Erreur", "Les mots de passe ne correspondent pas.")
             return
@@ -44,13 +47,13 @@ def create_user_window():
         print(f"Utilisateur créé avec le nom {new_username}")
         messagebox.showinfo("Création réussie", f"Utilisateur créé avec le nom {new_username}")
 
-        # Fermer la fenêtre de création d'utilisateur
+        # Close the user creation window
         create_user_window.destroy()
 
     create_user_window = tk.Tk()
 
     create_user_window.title("Créer un utilisateur")
-    create_user_window.geometry("500x350")  # Ajusté pour la confirmation de mot de passe
+    create_user_window.geometry("500x350")
 
     rgb_color = (139, 201, 194)
     hex_color = '#%02x%02x%02x' % rgb_color
@@ -64,7 +67,8 @@ def create_user_window():
 
     lbl_new_username = tk.Label(infos_frame, text="Nom d'utilisateur: ", bg="white", padx=40, font=("Arial,11"))
     lbl_new_password = tk.Label(infos_frame, text="Mot de passe: ", bg="white", padx=40, font=("Arial,11"))
-    lbl_confirm_password = tk.Label(infos_frame, text="Confirmer le mot de passe: ", bg="white", padx=40, font=("Arial,11"))
+    lbl_confirm_password = tk.Label(infos_frame, text="Confirmer le mot de passe: ", bg="white", padx=40,
+                                    font=("Arial,11"))
 
     entry_new_username = tk.Entry(infos_frame)
     entry_new_pass = tk.Entry(infos_frame, show="*")

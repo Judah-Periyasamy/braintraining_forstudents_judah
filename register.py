@@ -12,43 +12,48 @@ from create_user import *
 import menu as menu_api
 
 
+# Creates automatically an admin account
 def create_default_admin():
     # Crée un compte administrateur par défaut
     create_user('Admin', 'Pa$$w0rd', 2)
 
 
+# Function to see the password
 def show():
     entry_pass.configure(show='')
     check.configure(command=hide, text='hide password')
 
 
+# Function to hide the password
 def hide():
     entry_pass.configure(show='*')
     check.configure(command=show, text='show password')
 
 
+# Function to log in
 def authenticate_user():
     username = entry_username.get()
     password = entry_pass.get()
 
     user = login_user(username, password)
 
+    # Authenticated user, display success message
     if user != False:
-        # Utilisateur authentifié, afficher un message de réussite
         messagebox.showinfo("Connexion réussie",
                             f"Connexion réussie en tant que {username} avec le niveau {user['level']}")
 
-        # Lancer la fenêtre principale avec le nom d'utilisateur
+        # Launch main window with username
         login_window.destroy()
         menu_api.start_main_window(user)
 
 
     else:
-        # Échec de la connexion, afficher un message d'erreur
+        # Connection failed, display error message
         messagebox.showerror("Échec de la connexion",
                              "Échec de la connexion. Vérifiez les informations d'identification.")
 
 
+# Login window
 def login_account():
     global entry_username, login_window, entry_pass, check
 
@@ -101,11 +106,11 @@ def login_account():
     login_window.mainloop()
 
 
-# Vérifie si un compte administrateur existe
+# Check if an administrator account exists
 if not check_admin_exists():
-    # Crée un compte administrateur par défaut si nécessaire
+    # Creates a default administrator account if necessary
     create_default_admin()
 
-# Appeler la fonction pour lancer la fenêtre de connexion
+# Call the function to launch the login window
 if __name__ == "__main__":
     login_account()

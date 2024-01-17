@@ -44,19 +44,19 @@ def settings():
     window_settings.mainloop()
 
 def save_player_info():
-    # Récupérer les valeurs des entrées et de la combobox
+    # Retrieve input and combobox values
     player_name = entry_player_name.get()
     player_level = combo_player_level.get()
 
-    # Vérifier si les champs ne sont pas vides
+    # Check if the fields are not empty
     if not player_name or not player_level:
         messagebox.showerror("Erreur", "Veuillez remplir tous les champs.")
         return
 
-    # Sauvegarder les informations du joueur dans la base de données
+    # Save player information to database
     database.update_user_info(player_name, 2 if player_level == "Prof" else 1)
 
-    # Fermer la fenêtre des paramètres
+    # Close settings window
     window_settings.destroy()
 
 

@@ -94,6 +94,7 @@ def infos_results(pseudo, exercise):
     return infos
 
 
+# Function that will get all the values stocked in the table results and make totals values
 def total_result(pseudo, exercise):
     open_dbconnection()
     cursor = db_connection.cursor()
@@ -120,6 +121,7 @@ def total_result(pseudo, exercise):
     return total_data
 
 
+# Function that will delete results depending on the user
 def result_deletion(id):
     open_dbconnection()
     cursor = db_connection.cursor()
@@ -128,6 +130,7 @@ def result_deletion(id):
     return
 
 
+# # Function that will modify results depending on the user
 def result_modification(user_id, dataset):
     open_dbconnection()
     data = []
@@ -139,6 +142,7 @@ def result_modification(user_id, dataset):
     cursor.execute(query, data)
 
 
+# # Function that will create results depending on the user
 def create_results(username, date_hour, duration, nb_ok, nb_total, title_exercice):
     cursor = db_connection.cursor()
     # Here we will create the now time
@@ -153,6 +157,7 @@ def create_results(username, date_hour, duration, nb_ok, nb_total, title_exercic
         return False
 
 
+# Function that will check if the user exists in the database
 def login_user(username, password):
     open_dbconnection()
     cursor = db_connection.cursor()
@@ -169,6 +174,7 @@ def login_user(username, password):
         return False
 
 
+# Function that will create a new user
 def create_user(username, password, level=1):
     open_dbconnection()
     cursor = db_connection.cursor()
@@ -183,8 +189,7 @@ def create_user(username, password, level=1):
     close_dbconnection()
 
 
-# create_user('judah', 'judah', 1)
-
+# Function that will update users level
 def update_user_info(username, level):
     open_dbconnection()
     try:
@@ -200,8 +205,8 @@ def update_user_info(username, level):
     close_dbconnection()
 
 
+# Function that will check if there's already an admin account
 def check_admin_exists():
-    # Vérifie si un compte administrateur existe déjà
     open_dbconnection()
     cursor = db_connection.cursor()
     query = "SELECT * FROM users WHERE username = 'Admin' AND level = 2"
