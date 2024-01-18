@@ -218,16 +218,22 @@ def check_admin_exists():
 
 
 def get_user_info(username):
-    open_dbconnection()
-    cursor = db_connection.cursor()
+    try:
+        open_dbconnection()
+        cursor = db_connection.cursor()
 
-    query = "SELECT id, level FROM users WHERE username = %s"
-    cursor.execute(query, (username,))
-    user_data = cursor.fetchone()
-    cursor.close()
-    close_dbconnection()
+        query = "SELECT id, level FROM users WHERE username = %s"
+        cursor.execute(query, (username,))
+        user_data = cursor.fetchone()
+        cursor.close()
+        close_dbconnection()
 
-    if user_data:
-        return {'id': user_data[0], 'level': user_data[1]}
-    else:
+        print("User data:", user_data)  # Ajout de cette ligne pour déboguer
+
+        if user_data:
+            return user_data[0], user_data[1]
+        else:
+            return None
+    except Exception as e:
+        print("Error in get_user_info:", e)
         return None

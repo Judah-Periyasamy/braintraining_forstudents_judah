@@ -137,8 +137,8 @@ def creation():
             messagebox.showinfo("Message", "Veuillez entrez toutes les valeurs!!")
         else:
             try:
-                user_id = 1  # Remplacez cela par la valeur correcte de l'ID de l'utilisateur
-                res = create_results(username, date_hour, duration, nb_ok, nb_total, exercice_value, user_id)
+                user_id = get_user_info(username) # Remplacez cela par la valeur correcte de l'ID de l'utilisateur
+                res = create_results(username, date_hour, duration, nb_ok, nb_total, exercice_value, user_id[0])
                 if res:
                     messagebox.showinfo("Message", "Validé !!!")
                     create_win.destroy()
