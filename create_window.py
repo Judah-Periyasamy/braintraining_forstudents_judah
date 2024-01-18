@@ -5,7 +5,6 @@ Created by Judah Periyasamy
 15/12/23
 """
 
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 import geo01
@@ -43,7 +42,7 @@ def create_result():
 
     # Filters Label
     lbl_user = Label(filter_frame, text="Pseudo :", bg="white", padx=40, font=("Arial,11"))
-    lbl_date= Label(filter_frame, text="Date et Heure :", bg="white", padx=40, font=("Arial,11"))
+    lbl_date = Label(filter_frame, text="Date et Heure :", bg="white", padx=40, font=("Arial,11"))
     lbl_time = Label(filter_frame, text="Temps :", bg="white", padx=40, font=("Arial,11"))
     lbl_exercice = Label(filter_frame, text="Exercice :", bg="white", padx=40, font=("Arial,11"))
     lbl_nb_ok = Label(filter_frame, text="nb_ok :", bg="white", padx=40, font=("Arial,11"))
@@ -51,11 +50,12 @@ def create_result():
 
     button_create_valid = Button(create_win, text="Valider", font=("Arial,11"), command=creation)
 
-    #Label info spec
+    # Label info spec
     lbl_info_title = tk.Label(create_win, text="INFORMATION CONCERNANT LES FORMATS", font=("Arial", 15))
     lbl_info_title.grid(row=4, column=1, ipady=5, padx=40, pady=40)
 
-    lbl_infos = Label(create_win, text="Pour la date et heure : format YY-MM-DD HH:MM:SS", bg="white", padx=40, font=("Arial,11"))
+    lbl_infos = Label(create_win, text="Pour la date et heure : format YY-MM-DD HH:MM:SS", bg="white", padx=40,
+                      font=("Arial,11"))
     lbl_infos.grid(row=5, column=1, ipady=5, padx=40)
 
     lbl_infos2 = Label(create_win, text="Pour le temps : format HH:MM:SS", bg="white", padx=40, font=("Arial,11"))
@@ -101,6 +101,7 @@ def create_result():
     # main loop
     create_win.mainloop()
 
+
 # Function for the colors for progress bar
 def get_color(percentage):
     if percentage >= 70:
@@ -113,37 +114,38 @@ def get_color(percentage):
 
 # Function to create new values manually
 def creation():
-    open_dbconnection()
-    global entry_user, entry_date, entry_time, entry_nb_ok, entry_nb_total, cbo_entry_exercice_create, create_win
-    username = entry_user.get()
-    date_hour = entry_date.get()
-    duration = entry_time.get()
-    nb_ok = entry_nb_ok.get()
-    nb_total = entry_nb_total.get()
-    exercice_value = 0
+    try:
+        open_dbconnection()
 
-    exercice = cbo_entry_exercice_create.get()
-    if exercice == 'GE001':
-        exercice_value = 1
-    elif exercice == 'INFO02':
-        exercice_value = 2
-    elif exercice == 'INFO05':
-        exercice_value = 3
+        global entry_user, entry_date, entry_time, entry_nb_ok, entry_nb_total, cbo_entry_exercice_create, create_win
+        username = entry_user.get()
+        date_hour = entry_date.get()
+        duration = entry_time.get()
+        nb_ok = entry_nb_ok.get()
+        nb_total = entry_nb_total.get()
+        exercice_value = 0
 
-    if username == "" or date_hour == "" or duration =="" or nb_ok == "" or nb_total == "" or exercice == "":
-        print("TEST")
-        messagebox.showinfo("Message", "Veuillez entrez toutes les valeurs!!")
+        exercice = cbo_entry_exercice_create.get()
+        if exercice == 'GEO01':
+            exercice_value = 1
+        elif exercice == 'INFO02':
+            exercice_value = 2
+        elif exercice == 'INFO05':
+            exercice_value = 3
 
-    else:
-        try:
-           res = create_results(username,date_hour,duration,nb_ok,nb_total,exercice_value)
-           if res:
-               messagebox.showinfo("Message", "Validé !!!")
-               print("dans save")
-               create_win.destroy()
-           else:
-                print("Echec de l'ajout.\n")
-        except Exception:
-            print("Echec de l'ajout.\n")
+        if username == "" or date_hour == "" or duration == "" or nb_ok == "" or nb_total == "" or exercice == "":
+            messagebox.showinfo("Message", "Veuillez entrez toutes les valeurs!!")
+        else:
+            try:
+                user_id = 1  # Remplacez cela par la valeur correcte de l'ID de l'utilisateur
+                res = create_results(username, date_hour, duration, nb_ok, nb_total, exercice_value, user_id)
+                if res:
+                    messagebox.showinfo("Message", "Validé !!!")
+                    create_win.destroy()
+                else:
+                    print("Echec de l'ajout.\n")
+            except Exception as e:
+                print(f"Echec de l'ajout : {e}\n")
 
-    close_dbconnection()
+    finally:
+        close_dbconnection()

@@ -59,7 +59,7 @@ def get_exercise_id(name):
         cursor = db_connection.cursor()
         query = "Select id from exercices where name=%s"
         cursor.execute(query, (name,))
-        result = cursor.fetchone()[0]
+        result = cursor.fetchone()
     except:
         result = "Failed"
     return result
@@ -143,14 +143,16 @@ def result_modification(user_id, dataset):
 
 
 # # Function that will create results depending on the user
-def create_results(username, date_hour, duration, nb_ok, nb_total, title_exercice):
+def create_results(username, date_hour, duration, nb_ok, nb_total, title_exercice, user_id):
+    open_dbconnection()
     cursor = db_connection.cursor()
     # Here we will create the now time
     # date_hour = time.strftime('%Y-%m-%d %H-%M-%S')
-    query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id) values (%s, %s, %s, %s, %s, %s)"
-    cursor.execute(query, (username, date_hour, duration, nb_ok, nb_total, title_exercice))
+    query = "insert into results (username, start_date_hour, duration, nb_ok, nb_total, exercice_id, user_id) values (%s, %s, %s, %s, %s, %s,%s)"
+    cursor.execute(query, (username, date_hour, duration, nb_ok, nb_total, title_exercice, user_id))
     affected_rows = cursor.rowcount
     cursor.close()
+    close_dbconnection()
     if affected_rows == 1:
         return True
     else:
@@ -213,3 +215,19 @@ def check_admin_exists():
     cursor.close()
     close_dbconnection()
     return admin_exists
+
+
+def get_user_info(username):
+    open_dbconnection()
+    cursor = db_connection.cursor()
+
+    query = "SELECT id, level FROM users WHERE username = %s"
+    cursor.execute(query, (username,))
+    user_data = cursor.fetchone()
+    cursor.close()
+    close_dbconnection()
+
+    if user_data:
+        return {'id': user_data[0], 'level': user_data[1]}
+    else:
+        return None
