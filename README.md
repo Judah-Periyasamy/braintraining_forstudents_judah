@@ -13,6 +13,13 @@ Version : \
 Il s'agit d'une application en python réalisée avec tkinter pour la partie graphique. Aucune configuration spécifique n'est requise.\
 Il conviendra cependant d'installer le package mysql-connector-python pour l'interaction avec la BD.
 
+### Comment lancer l'application? ###
+
+Pour lancer l'appli, il faut lancer le fichier register.py. 
+Il faudra soit se loguer, soit créer un compte. 
+Un compte admin sera crée automatiquement.
+
+
 ### A qui puis-je m'adresser? ###
 
 Propriétaire du dépôt : frederique.andolfatto@eudvaud.ch\ et judah.periyasamy@eduvaud.ch\
